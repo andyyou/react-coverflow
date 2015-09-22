@@ -1,0 +1,57 @@
+{
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true
+  },
+  "ecmaFeatures": {
+    "jsx": true,
+    "arrowFunctions": true,
+    "blockBindings": true,
+    "classes": true,
+    "defaultParams": true,
+    "destructuring": true,
+    "forOf": true,
+    "generators": false,
+    "modules": true,
+    "objectLiteralComputedProperties": true,
+    "objectLiteralDuplicateProperties": false,
+    "objectLiteralShorthandMethods": true,
+    "objectLiteralShorthandProperties": true,
+    "spread": true,
+    "superInFunctions": true,
+    "templateStrings": true,
+  },
+  "rules": {
+    /**
+     * References
+     *  http://www.cnblogs.com/qianlegeqian/p/4728170.html
+     *  https://github.com/airbnb/javascript/blob/master/packages/eslint-config-airbnb/base/index.js
+     */
+
+    // babel inserts 'use strict'; for us
+    "strict": [2, "never"],
+    "semi": [2, "always"], // 句尾強制分號
+    "curly": 0,
+    "radix": 2,
+    "wrap-iife": 2,
+    "brace-style": 0,
+    "comma-style": 2,
+    "comma-dangle": [2, "never"],
+    "consistent-this": 0,
+    "indent": [2, 2],
+    "no-lonely-if": 2,
+    "no-nested-ternary": 2,
+    "no-use-before-define": [2, "nofunc"],
+    "quotes": [2, "single"],
+    "space-after-keywords": [2, "always"],
+    "space-before-blocks": [2, "always"], // 大括號前要有空白
+    "space-before-function-paren": [2, "never"],
+    "space-in-parens": [2, "never"], // 小括號內(前後)不得有空白
+    "space-unary-ops": 2,
+    "no-mixed-spaces-and-tabs": [2, false], // 禁止混用 space & tab
+  }
+}
+
+
+
