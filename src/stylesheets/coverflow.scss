@@ -26,6 +26,8 @@
 .figure {
   display: block;
   position:relative;
+  margin: 0;
+  padding: 0;
   flex: 0 0 auto;
   cursor: pointer;
   transition: transform 600ms ease;
@@ -80,4 +82,9 @@
       color: white;
     }
   }
+}
+
+@keyframes prevent {
+  0% { pointer-events: none; }
+  100% { pointer-events: auto; }
 }
