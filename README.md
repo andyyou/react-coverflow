@@ -1,11 +1,12 @@
 React Coverflow
 ===
 [![npm version](https://badge.fury.io/js/react-coverflow.svg)](http://badge.fury.io/js/react-coverflow)
+
 [![NPM](https://nodei.co/npm/react-coverflow.png)](https://nodei.co/npm/react-coverflow/)
 
 ---
 
-![](site/images/preview.png)
+![](https://raw.githubusercontent.com/andyyou/react-coverflow/gh-pages/images/preview.png)
 
 React Coverflow is a React component for building cover flow style carousel in a convenient way.
 
