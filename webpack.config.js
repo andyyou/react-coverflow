@@ -8,7 +8,8 @@ var plugins = [
 
 var entry = {};
 var mainEntryPoints = glob.sync(
-  path.join(__dirname, './js/*.js')
+  // Ignore compile filename with `.bundle.js`
+  path.join(__dirname, './js/!(*.bundle).js')
 );
 entry['main'] = mainEntryPoints;
 
