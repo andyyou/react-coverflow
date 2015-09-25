@@ -16,6 +16,7 @@ Features of `react-coverflow`
 * Support scroll in the component.
 * Support navigation buttons optional
 * Using css-module
+* Support mobile
 
 ## Getting started
 

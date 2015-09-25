@@ -1,6 +1,6 @@
 {
   "name": "react-coverflow",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Carousel of coverflow effect",
   "main": "main.js",
   "scripts": {

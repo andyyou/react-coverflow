@@ -220,7 +220,6 @@ class Coverflow extends React.Component {
   }
 
   _handleTouchStart(e) {
-    console.log('start: ', e.nativeEvent.touches);
     TOUCH.lastX = e.nativeEvent.touches[0].clientX;
     TOUCH.lastMove = this.state.move;
   }
