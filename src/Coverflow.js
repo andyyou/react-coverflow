@@ -8,7 +8,7 @@ import styles from './stylesheets/coverflow';
 
 React.initializeTouchEvents(true);
 
-var TOUCH = {move: false, 
+var TOUCH = {move: false,
   lastX: 0,
   sign: 0,
   lastMove: 0
@@ -39,7 +39,7 @@ class Coverflow extends React.Component {
 
   componentDidMount() {
     let length = React.Children.count(this.props.children);
-    
+
     TRANSITIONS.forEach(event => {
       for (let i = 0; i < length; i++) {
         var figureID = `figure_${i}`;
@@ -50,7 +50,7 @@ class Coverflow extends React.Component {
 
   componentWillUnmount() {
     let length = React.Children.count(this.props.children);
-    
+
     TRANSITIONS.forEach(event => {
       for (let i = 0; i < length; i++) {
         var figureID = `figure_${i}`;
@@ -63,7 +63,7 @@ class Coverflow extends React.Component {
     const {width, height} = this.props;
 
     return (
-      <div className={styles.container} 
+      <div className={styles.container}
            style={{width: `${width}px`, height: `${height}px`}}
            onWheel={this._handleWheel.bind(this)}
            onTouchStart={this._handleTouchStart.bind(this)}
@@ -84,7 +84,7 @@ class Coverflow extends React.Component {
             )
           }
         </div>
-        
+
       </div>
     );
   }
@@ -99,33 +99,34 @@ class Coverflow extends React.Component {
 
   _handleFigureStyle(index, current) {
     const {width, displayQuantityOfSide} = this.props;
-    let style = {}; 
+    let style = {};
     let center = this._center();
     let baseWidth = width / (displayQuantityOfSide * 2 + 1);
-    
+    let length = React.Children.count(this.props.children);
+    let offset = length % 2 === 0 ? -width/10 : 0;
+    console.log('width: ', width, 'baseWidth: ', baseWidth);
     // Handle opacity
     let depth = displayQuantityOfSide - Math.abs(current - index);
     let opacity = depth === 1 ? 0.95 : 0.5;
     opacity = depth === 2 ? 0.92 : opacity;
     opacity = depth === 3 ? 0.9 : opacity;
     opacity = current === index ? 1 : opacity;
-    
     // Handle translateX
     if (index === current) {
       style['width'] = `${baseWidth}px`;
-      style['transform'] = `translateX(${this.state.move}px) scale(1.2)`;
+      style['transform'] = `translateX(${this.state.move + offset}px) scale(1.2)`;
       style['zIndex'] = `${10 - depth}`;
       style['opacity'] = opacity;
     } else if (index < current) {
       // Left side
       style['width'] = `${baseWidth}px`;
-      style['transform'] = `translateX(${this.state.move}px) rotateY(40deg)`;
+      style['transform'] = `translateX(${this.state.move + offset}px) rotateY(40deg)`;
       style['zIndex'] = `${10 - depth}`;
       style['opacity'] = opacity;
     } else if (index > current) {
       // Right side
       style['width'] = `${baseWidth}px`;
-      style['transform'] = ` translateX(${this.state.move}px) rotateY(-40deg)`;
+      style['transform'] = ` translateX(${this.state.move + offset}px) rotateY(-40deg)`;
       style['zIndex'] = `${10 - depth}`;
       style['opacity'] = opacity;
     }
@@ -135,10 +136,11 @@ class Coverflow extends React.Component {
   _handleFigureClick(index, url, e) {
     e.preventDefault();
     this.refs.stage.getDOMNode().style['pointerEvents'] = 'none';
-   
+
     if (this.state.current === index) {
       // TODO: support lightbox.
       window.open(url, '_blank');
+      this._removePointerEvents();
     } else {
       const {width, displayQuantityOfSide} = this.props;
       let baseWidth = width / (displayQuantityOfSide * 2 + 1);
@@ -153,7 +155,7 @@ class Coverflow extends React.Component {
       let figureElement = React.cloneElement(child, {className: styles.cover});
       let style = this._handleFigureStyle(index, this.state.current);
       return (
-        <figure className={styles.figure} 
+        <figure className={styles.figure}
           key={index}
           style={style}
           onClick={ this._handleFigureClick.bind(this, index, figureElement.props.url) }
@@ -234,7 +236,7 @@ class Coverflow extends React.Component {
     let move = clientX - lastX;
     let totalMove = TOUCH.lastMove - move;
     let sign = Math.abs(move) / move;
-    
+
     if (Math.abs(totalMove) >= baseWidth) {
       let func = null;
       if (sign > 0) {
