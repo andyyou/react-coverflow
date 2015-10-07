@@ -26,7 +26,7 @@ Install `react-coverflow` using npm.
 $ npm install react-coverflow
 ```
 
-The required stylesheet using `css-module` and include in package(js file), so you don't need include other stylesheet. 
+The required stylesheet using `css-module` and include in package(js file), so you don't need include other stylesheet.
 
 ## Usage
 
@@ -35,14 +35,14 @@ var React = require('react');
 var Coverflow = require('react-coverflow');
 
 React.render(
-  <Coverflow width="960" height="500" 
+  <Coverflow width="960" height="500"
     displayQuantityOfSide={2}
     navigation={false}
     >
     <img src='image/path' alt='title or description' url="http://andyyou.github.io/react-coverflow/" />
     <img src='image/path' alt='title or description' url="http://andyyou.github.io/react-coverflow/"/>
     <img src='image/path' alt='title or description' url="http://andyyou.github.io/react-coverflow/"/>
-  </Coverflow>, 
+  </Coverflow>,
 
   document.querySelector('.content')
 );
@@ -83,7 +83,8 @@ $ npm run dev
 ```
 
 ## Release History
-* 2015-10-22 v0.1.0
+* 2015-10-07 v0.1.3 Support even number of images, Fix bugs
+* 2015-09-22 v0.1.0
 
 ## Todo
 
