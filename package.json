@@ -6,7 +6,7 @@
   "scripts": {
     "test": "make test",
     "clean": "rm -rf dist && rm -rf site/javascripts/*.bundle.js",
-    "build-npm": "rm -rf dist && webpack --progress --colors -d && npm pack",
+    "build-npm": "rm -rf dist && webpack --progress --colors -d",
     "build-site": "rm -rf site/javascripts/*.bundle.js && webpack --config site/webpack.config.js",
     "dev": "rm -rf site/javascripts/*.bundle.js && NODE_ENV=react-hot webpack-dev-server --config site/webpack.config.js --progress --colors --inline --hot --port 3000 --host 0.0.0.0 --content-base site"
   },
