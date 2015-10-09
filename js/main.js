@@ -2,9 +2,10 @@ import React from 'react';
 import Coverflow from '../../src/Coverflow';
 
 React.render(
-  <Coverflow width="960" height="500"
+  <Coverflow width="320" height="480"
     displayQuantityOfSide={2}
     navigation={false}
+    enableHeading={false}
     >
     <img src='images/album-1.png' alt='Album one' url="https://facebook.github.io/react/"/>
     <img src='images/album-2.png' alt='Album two' url="http://passer.cc"/>
