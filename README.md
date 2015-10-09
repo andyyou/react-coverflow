@@ -54,6 +54,10 @@ React.render(
 * navigation [boolean]: Enable navigation buttons (prev, next). (defalut: false)
 * enableHeading [boolean]: Show or hide the heading form img tag alt. (defalut: true)
 
+#### Responsive solution
+
+For now, you can use [react-responsive](https://github.com/contra/react-responsive) to support media query and responsive design.
+
 ## Contributors
 
 * [andyyou](https://github.com/andyyou)
@@ -84,12 +88,13 @@ $ npm run dev
 ```
 
 ## Release History
-* 2015-10-09 v0.1.4 Add propTypes and enableHeading options for mobile.
+* 2015-10-09
+  - v0.1.4 Add propTypes and enableHeading options for mobile.
+  - Add example of responsive.
 * 2015-10-07 v0.1.3 Support even number of images, Fix bugs
 * 2015-09-22 v0.1.0
 
 ## Todo
 
-* Support Responsive
 * Imporve performance in Mobile(Touch events part)
 * Write test case
