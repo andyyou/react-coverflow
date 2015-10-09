@@ -3,7 +3,7 @@
  *
  * Author: andyyou
  */
-import React from 'react';
+import React from 'react/addons';
 import styles from './stylesheets/coverflow';
 
 React.initializeTouchEvents(true);
@@ -104,7 +104,6 @@ class Coverflow extends React.Component {
     let baseWidth = width / (displayQuantityOfSide * 2 + 1);
     let length = React.Children.count(this.props.children);
     let offset = length % 2 === 0 ? -width/10 : 0;
-    console.log('width: ', width, 'baseWidth: ', baseWidth);
     // Handle opacity
     let depth = displayQuantityOfSide - Math.abs(current - index);
     let opacity = depth === 1 ? 0.95 : 0.5;
@@ -151,6 +150,8 @@ class Coverflow extends React.Component {
   }
 
   _renderFigureNodes() {
+    const {enableHeading} = this.props;
+
     let figureNodes = React.Children.map(this.props.children, (child, index) => {
       let figureElement = React.cloneElement(child, {className: styles.cover});
       let style = this._handleFigureStyle(index, this.state.current);
@@ -162,7 +163,10 @@ class Coverflow extends React.Component {
           ref={`figure_${index}`}
           >
           {figureElement}
-          <div className={styles.text}>{figureElement.props.alt}</div>
+          {
+            enableHeading &&
+            <div className={styles.text}>{figureElement.props.alt}</div>
+          }
         </figure>
       );
     });
@@ -249,6 +253,17 @@ class Coverflow extends React.Component {
       }
     }
   }
+};
+
+Coverflow.propTypes = {
+  displayQuantityOfSide: React.PropTypes.number.isRequired,
+  navigation: React.PropTypes.bool,
+  enableHeading: React.PropTypes.bool
+};
+
+Coverflow.defaultProps = {
+  navigation: false,
+  enableHeading: true
 };
 
 export default Coverflow;

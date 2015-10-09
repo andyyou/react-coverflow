@@ -50,8 +50,9 @@ React.render(
 
 #### Options
 
-* displayQuantityOfSide: The number of display image from center to the one side end.
-* navigation: Enable navigation buttons (prev, next).
+* displayQuantityOfSide [number]: The number of display image from center to the one side end.
+* navigation [boolean]: Enable navigation buttons (prev, next). (defalut: false)
+* enableHeading [boolean]: Show or hide the heading form img tag alt. (defalut: true)
 
 ## Contributors
 
@@ -83,6 +84,7 @@ $ npm run dev
 ```
 
 ## Release History
+* 2015-10-09 v0.1.4 Add propTypes and enableHeading options for mobile.
 * 2015-10-07 v0.1.3 Support even number of images, Fix bugs
 * 2015-09-22 v0.1.0
 
