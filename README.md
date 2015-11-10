@@ -32,9 +32,10 @@ The required stylesheet using `css-module` and include in package(js file), so y
 
 ```
 var React = require('react');
+var ReactDOM = require('react-dom');
 var Coverflow = require('react-coverflow');
 
-React.render(
+ReactDOM.render(
   <Coverflow width="960" height="500"
     displayQuantityOfSide={2}
     navigation={false}
@@ -88,6 +89,8 @@ $ npm run dev
 ```
 
 ## Release History
+* 2015-11-10
+  - v0.1.6 Support react 0.14.2
 * 2015-10-09
   - v0.1.4 Add propTypes and enableHeading options for mobile.
   - Add example of responsive.

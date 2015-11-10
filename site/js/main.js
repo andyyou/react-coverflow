@@ -1,9 +1,10 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import MediaQuery from 'react-responsive';
 import Coverflow from '../../src/Coverflow';
 
 
-React.render(
+ReactDOM.render(
   <Coverflow width="960" height="480"
     displayQuantityOfSide={2}
     navigation={false}
@@ -43,7 +44,7 @@ React.render(
   document.querySelector('.example_1')
 );
 
-React.render(
+ReactDOM.render(
   <div>
     <MediaQuery query='(max-width: 960px)'>
       <Coverflow width="320" height="480"

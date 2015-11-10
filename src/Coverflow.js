@@ -3,10 +3,13 @@
  *
  * Author: andyyou
  */
-import React from 'react/addons';
+// import React from 'react/addons';
+import React, {Component} from 'react';
+import ReactDOM from 'react-dom';
 import styles from './stylesheets/coverflow';
 
-React.initializeTouchEvents(true);
+import injectTapEventPlugin from 'react-tap-event-plugin';
+injectTapEventPlugin();
 
 var TOUCH = {move: false,
   lastX: 0,
@@ -24,7 +27,7 @@ var HandleAnimationState = function() {
   this._removePointerEvents();
 };
 
-class Coverflow extends React.Component {
+class Coverflow extends Component {
   /**
    * Life cycle events
    */
@@ -43,7 +46,7 @@ class Coverflow extends React.Component {
     TRANSITIONS.forEach(event => {
       for (let i = 0; i < length; i++) {
         var figureID = `figure_${i}`;
-        this.refs[figureID].getDOMNode().addEventListener(event, HandleAnimationState.bind(this));
+        this.refs[figureID].addEventListener(event, HandleAnimationState.bind(this));
       }
     });
   }
@@ -54,7 +57,7 @@ class Coverflow extends React.Component {
     TRANSITIONS.forEach(event => {
       for (let i = 0; i < length; i++) {
         var figureID = `figure_${i}`;
-        this.refs[figureID].getDOMNode().removeEventListener(event, HandleAnimationState.bind(this));
+        this.refs[figureID].removeEventListener(event, HandleAnimationState.bind(this));
       }
     });
   }
@@ -134,7 +137,7 @@ class Coverflow extends React.Component {
 
   _handleFigureClick(index, url, e) {
     e.preventDefault();
-    this.refs.stage.getDOMNode().style['pointerEvents'] = 'none';
+    this.refs.stage.style['pointerEvents'] = 'none';
 
     if (this.state.current === index) {
       // TODO: support lightbox.
@@ -174,7 +177,7 @@ class Coverflow extends React.Component {
   }
 
   _removePointerEvents() {
-    this.refs.stage.getDOMNode().style['pointerEvents'] = 'auto';
+    this.refs.stage.style['pointerEvents'] = 'auto';
   }
 
   _handlePrevFigure() {
