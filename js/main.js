@@ -51,6 +51,7 @@ ReactDOM.render(
         displayQuantityOfSide={2}
         navigation={false}
         enableHeading={false}
+        enableScroll={false}
         >
         <img src='images/album-1.png' alt='Album one' url="https://facebook.github.io/react/"/>
         <img src='images/album-2.png' alt='Album two' url="http://passer.cc"/>
