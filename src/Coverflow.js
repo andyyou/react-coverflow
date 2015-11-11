@@ -3,7 +3,6 @@
  *
  * Author: andyyou
  */
-// import React from 'react/addons';
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import styles from './stylesheets/coverflow';
@@ -63,12 +62,12 @@ class Coverflow extends Component {
   }
 
   render() {
-    const {width, height} = this.props;
+    const {width, height, enableScroll} = this.props;
 
     return (
       <div className={styles.container}
            style={{width: `${width}px`, height: `${height}px`}}
-           onWheel={this._handleWheel.bind(this)}
+           onWheel={enableScroll ? this._handleWheel.bind(this) : null}
            onTouchStart={this._handleTouchStart.bind(this)}
            onTouchMove={this._handleTouchMove.bind(this)}
            >
@@ -261,12 +260,16 @@ class Coverflow extends Component {
 Coverflow.propTypes = {
   displayQuantityOfSide: React.PropTypes.number.isRequired,
   navigation: React.PropTypes.bool,
-  enableHeading: React.PropTypes.bool
+  enableHeading: React.PropTypes.bool,
+  enableScroll: React.PropTypes.bool
 };
+
+Coverflow.displayName = 'Coverflow';
 
 Coverflow.defaultProps = {
   navigation: false,
-  enableHeading: true
+  enableHeading: true,
+  enableScroll: true
 };
 
 export default Coverflow;

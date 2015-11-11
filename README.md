@@ -39,6 +39,7 @@ ReactDOM.render(
   <Coverflow width="960" height="500"
     displayQuantityOfSide={2}
     navigation={false}
+    enableScroll={true}
     >
     <img src='image/path' alt='title or description' url="http://andyyou.github.io/react-coverflow/" />
     <img src='image/path' alt='title or description' url="http://andyyou.github.io/react-coverflow/"/>
@@ -54,6 +55,7 @@ ReactDOM.render(
 * displayQuantityOfSide [number]: The number of display image from center to the one side end.
 * navigation [boolean]: Enable navigation buttons (prev, next). (defalut: false)
 * enableHeading [boolean]: Show or hide the heading form img tag alt. (defalut: true)
+* enableScroll={false} [boolean]: Enable scrolling feature.
 
 #### Responsive solution
 
@@ -89,6 +91,9 @@ $ npm run dev
 ```
 
 ## Release History
+* 2015-11-11
+  - v0.1.8 Fix some issues and add option to enable/disable scroll ability.
+  - Add displayName to fix react-devtool show t tag.
 * 2015-11-10
   - v0.1.6 Support react 0.14.2
 * 2015-10-09
@@ -96,6 +101,17 @@ $ npm run dev
   - Add example of responsive.
 * 2015-10-07 v0.1.3 Support even number of images, Fix bugs
 * 2015-09-22 v0.1.0
+
+
+## Issues
+
+* If you get the errors as follow
+
+```
+Warning: Any use of a keyed object should be wrapped in React.addons.createFragment(object) before being passed as a child. Warning: t(...): React component classes must extend React.Component.
+```
+
+That because of React 0.14.2 got some change and the component not update before. 
 
 ## Todo
 
