@@ -1,11 +1,11 @@
 {
   "name": "react-coverflow",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "Carousel of coverflow effect",
   "main": "main.js",
   "scripts": {
     "test": "make test",
-    "prepublish" : "rm -rf dist && webpack --progress --colors -d",
+    "prepublish": "rm -rf dist && webpack --progress --colors -d",
     "clean": "rm -rf dist && rm -rf site/javascripts/*.bundle.js",
     "build-npm": "rm -rf dist && webpack --progress --colors -d",
     "build-site": "rm -rf site/javascripts/*.bundle.js && webpack --config site/webpack.config.js",
