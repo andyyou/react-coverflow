@@ -69,9 +69,6 @@ class Coverflow extends Component {
   }
 
   updateDimensions() {
-    console.log('width', ReactDOM.findDOMNode(this).offsetWidth);
-    console.log('height', ReactDOM.findDOMNode(this).offsetHeight);
-
     this.setState({
       width: ReactDOM.findDOMNode(this).offsetWidth,
       height: ReactDOM.findDOMNode(this).offsetHeight
@@ -81,7 +78,6 @@ class Coverflow extends Component {
   render() {
     const {enableScroll} = this.props;
     const {width, height} = this.state;
-    console.log('render', width, height);
     return (
       <div className={styles.container}
            style={[{width: `${width}px`, height: `${height}px`}, this.props.media]}
