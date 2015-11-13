@@ -3,9 +3,10 @@ import ReactDOM from 'react-dom';
 import MediaQuery from 'react-responsive';
 import Coverflow from '../../src/Coverflow';
 
-
 ReactDOM.render(
-  <Coverflow width="960" height="480"
+  <Coverflow
+    width={960}
+    height={480}
     displayQuantityOfSide={2}
     navigation={false}
     enableHeading={false}
@@ -45,34 +46,26 @@ ReactDOM.render(
 );
 
 ReactDOM.render(
-  <div>
-    <MediaQuery query='(max-width: 960px)'>
-      <Coverflow width="320" height="480"
-        displayQuantityOfSide={2}
-        navigation={false}
-        enableHeading={false}
-        >
-        <img src='images/album-1.png' alt='Album one' url="https://facebook.github.io/react/"/>
-        <img src='images/album-2.png' alt='Album two' url="http://passer.cc"/>
-        <img src='images/album-3.png' alt='Album three' url="https://doce.cc/"/>
-        <img src='images/album-4.png' alt='Album four' url="http://tw.yahoo.com"/>
-      </Coverflow>
-    </MediaQuery>
-    <MediaQuery query='(min-width: 960px)'>
-      <Coverflow width="960" height="480"
-        displayQuantityOfSide={2}
-        navigation={false}
-        enableHeading={false}
-        enableScroll={false}
-        >
-        <img src='images/album-1.png' alt='Album one' url="https://facebook.github.io/react/"/>
-        <img src='images/album-2.png' alt='Album two' url="http://passer.cc"/>
-        <img src='images/album-3.png' alt='Album three' url="https://doce.cc/"/>
-        <img src='images/album-4.png' alt='Album four' url="http://tw.yahoo.com"/>
-      </Coverflow>
-    </MediaQuery>
-
-  </div>
+  <Coverflow
+    displayQuantityOfSide={2}
+    navigation={true}
+    enableHeading={true}
+    media={{
+      '@media (max-width: 900px)': {
+        width: '600px',
+        height: '300px'
+      },
+      '@media (min-width: 900px)': {
+        width: '960px',
+        height: '600px'
+      }
+    }}
+    >
+    <img src='images/album-1.png' alt='Album one' url="https://facebook.github.io/react/"/>
+    <img src='images/album-2.png' alt='Album two' url="http://passer.cc"/>
+    <img src='images/album-3.png' alt='Album three' url="https://doce.cc/"/>
+    <img src='images/album-4.png' alt='Album four' url="http://tw.yahoo.com"/>
+  </Coverflow>
   ,
   document.querySelector('.example_2')
 );
