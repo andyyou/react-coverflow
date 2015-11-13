@@ -55,7 +55,21 @@ ReactDOM.render(
 * displayQuantityOfSide [number]: The number of display image from center to the one side end.
 * navigation [boolean]: Enable navigation buttons (prev, next). (defalut: false)
 * enableHeading [boolean]: Show or hide the heading form img tag alt. (defalut: true)
-* enableScroll={false} [boolean]: Enable scrolling feature.
+* enableScroll [boolean]: Enable scrolling feature.
+* media [object]: To support media query, if you want responsive with parent element you can ignore `width` and `height` props or set it to `auto`.
+
+```
+media={{
+  '@media (max-width: 900px)': {
+    width: '600px',
+    height: '300px'
+  },
+  '@media (min-width: 900px)': {
+    width: '960px',
+    height: '600px'
+  }
+}}
+```
 
 #### Responsive
 
