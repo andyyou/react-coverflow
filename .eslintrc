@@ -4,6 +4,7 @@
     "node": true,
     "es6": true
   },
+  "parser": "babel-eslint",
   "ecmaFeatures": {
     "jsx": true,
     "arrowFunctions": true,
@@ -52,6 +53,3 @@
     "no-mixed-spaces-and-tabs": [2, false], // 禁止混用 space & tab
   }
 }
-
-
-
