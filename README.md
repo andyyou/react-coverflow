@@ -57,9 +57,37 @@ ReactDOM.render(
 * enableHeading [boolean]: Show or hide the heading form img tag alt. (defalut: true)
 * enableScroll={false} [boolean]: Enable scrolling feature.
 
-#### Responsive solution
+#### Responsive
 
-For now, you can use [react-responsive](https://github.com/contra/react-responsive) to support media query and responsive design.
+Now, you can use `media` props to support responsive design. The syntax part is come form [Radium](http://projects.formidablelabs.com/radium/)
+You can reference to this [doc](https://github.com/FormidableLabs/radium/tree/master/docs/guides#media-queries).
+
+```
+ReactDOM.render(
+  <Coverflow
+    displayQuantityOfSide={2}
+    navigation={true}
+    enableHeading={true}
+    media={{
+      '@media (max-width: 900px)': {
+        width: '600px',
+        height: '300px'
+      },
+      '@media (min-width: 900px)': {
+        width: '960px',
+        height: '600px'
+      }
+    }}
+    >
+    <img src='images/album-1.png' alt='Album one' url="https://facebook.github.io/react/"/>
+    <img src='images/album-2.png' alt='Album two' url="http://passer.cc"/>
+    <img src='images/album-3.png' alt='Album three' url="https://doce.cc/"/>
+    <img src='images/album-4.png' alt='Album four' url="http://tw.yahoo.com"/>
+  </Coverflow>
+  ,
+  document.querySelector('.example_2')
+);
+```
 
 ## Contributors
 
@@ -91,6 +119,9 @@ $ npm run dev
 ```
 
 ## Release History
+* 2015-11-13
+  - v0.1.9 Support responsive props.
+  - Update eslint with babel-eslint.
 * 2015-11-11
   - v0.1.8 Fix some issues and add option to enable/disable scroll ability.
   - Add displayName to fix react-devtool show t tag.
@@ -111,7 +142,7 @@ $ npm run dev
 Warning: Any use of a keyed object should be wrapped in React.addons.createFragment(object) before being passed as a child. Warning: t(...): React component classes must extend React.Component.
 ```
 
-That because of React 0.14.2 got some change and the component not update before. 
+That because of React 0.14.2 got some change and the component not update before.
 
 ## Todo
 

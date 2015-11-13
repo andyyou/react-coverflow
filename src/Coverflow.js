@@ -5,6 +5,7 @@
  */
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
+import Radium from 'radium';
 import styles from './stylesheets/coverflow';
 
 import injectTapEventPlugin from 'react-tap-event-plugin';
@@ -26,6 +27,7 @@ var HandleAnimationState = function() {
   this._removePointerEvents();
 };
 
+@Radium
 class Coverflow extends Component {
   /**
    * Life cycle events
@@ -35,11 +37,14 @@ class Coverflow extends Component {
 
     this.state = {
       current: this._center(),
-      move: 0
+      move: 0,
+      width: this.props.width || 'auto',
+      height: this.props.height || 'auto'
     };
   }
 
   componentDidMount() {
+    this.updateDimensions();
     let length = React.Children.count(this.props.children);
 
     TRANSITIONS.forEach(event => {
@@ -48,6 +53,7 @@ class Coverflow extends Component {
         this.refs[figureID].addEventListener(event, HandleAnimationState.bind(this));
       }
     });
+    window.addEventListener('resize', this.updateDimensions.bind(this));
   }
 
   componentWillUnmount() {
@@ -59,14 +65,26 @@ class Coverflow extends Component {
         this.refs[figureID].removeEventListener(event, HandleAnimationState.bind(this));
       }
     });
+    window.removeEventListener('resize', this.updateDimensions.bind(this));
+  }
+
+  updateDimensions() {
+    console.log('width', ReactDOM.findDOMNode(this).offsetWidth);
+    console.log('height', ReactDOM.findDOMNode(this).offsetHeight);
+
+    this.setState({
+      width: ReactDOM.findDOMNode(this).offsetWidth,
+      height: ReactDOM.findDOMNode(this).offsetHeight
+    });
   }
 
   render() {
-    const {width, height, enableScroll} = this.props;
-
+    const {enableScroll} = this.props;
+    const {width, height} = this.state;
+    console.log('render', width, height);
     return (
       <div className={styles.container}
-           style={{width: `${width}px`, height: `${height}px`}}
+           style={[{width: `${width}px`, height: `${height}px`}, this.props.media]}
            onWheel={enableScroll ? this._handleWheel.bind(this) : null}
            onTouchStart={this._handleTouchStart.bind(this)}
            onTouchMove={this._handleTouchMove.bind(this)}
@@ -86,7 +104,6 @@ class Coverflow extends Component {
             )
           }
         </div>
-
       </div>
     );
   }
@@ -100,7 +117,8 @@ class Coverflow extends Component {
   }
 
   _handleFigureStyle(index, current) {
-    const {width, displayQuantityOfSide} = this.props;
+    const {displayQuantityOfSide} = this.props;
+    const {width} = this.state;
     let style = {};
     let center = this._center();
     let baseWidth = width / (displayQuantityOfSide * 2 + 1);
@@ -143,7 +161,8 @@ class Coverflow extends Component {
       window.open(url, '_blank');
       this._removePointerEvents();
     } else {
-      const {width, displayQuantityOfSide} = this.props;
+      const {displayQuantityOfSide} = this.props;
+      const {width} = this.state;
       let baseWidth = width / (displayQuantityOfSide * 2 + 1);
       let distance = this._center() - index;
       let move = distance * baseWidth;
@@ -180,7 +199,8 @@ class Coverflow extends Component {
   }
 
   _handlePrevFigure() {
-    const {width, displayQuantityOfSide} = this.props;
+    const {displayQuantityOfSide} = this.props;
+    const {width} = this.state;
     let current = this.state.current;
     let baseWidth = width / (displayQuantityOfSide * 2 + 1);
     let distance = this._center() - (current - 1);
@@ -193,7 +213,8 @@ class Coverflow extends Component {
   }
 
   _handleNextFigure() {
-    const {width, displayQuantityOfSide} = this.props;
+    const {displayQuantityOfSide} = this.props;
+    const {width} = this.state;
     let current = this.state.current;
     let baseWidth = width / (displayQuantityOfSide * 2 + 1);
     let distance = this._center() - (current + 1);
@@ -234,7 +255,8 @@ class Coverflow extends Component {
 
   _handleTouchMove(e) {
     e.preventDefault();
-    const {width, displayQuantityOfSide} = this.props;
+    const {displayQuantityOfSide} = this.props;
+    const {width} = this.state;
 
     let clientX = e.nativeEvent.touches[0].clientX;
     let lastX = TOUCH.lastX;
@@ -264,12 +286,12 @@ Coverflow.propTypes = {
   enableScroll: React.PropTypes.bool
 };
 
-Coverflow.displayName = 'Coverflow';
-
 Coverflow.defaultProps = {
   navigation: false,
   enableHeading: true,
   enableScroll: true
 };
+
+Coverflow.displayName = 'Coverflow';
 
 export default Coverflow;
