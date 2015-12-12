@@ -133,6 +133,7 @@ $ npm run dev
 ```
 
 ## Release History
+* 2015-12-12 Fix React 0.14.3 two copies issue
 * 2015-12-10 Update React version.
 * 2015-11-13
   - v0.1.9 Support responsive props.

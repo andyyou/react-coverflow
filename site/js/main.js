@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import MediaQuery from 'react-responsive';
 import Coverflow from '../../src/Coverflow';
 
 ReactDOM.render(
