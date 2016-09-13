@@ -81,30 +81,33 @@ media={{
 Now, you can use `media` props to support responsive design. The syntax part is come form [Radium](http://projects.formidablelabs.com/radium/)
 You can reference to this [doc](https://github.com/FormidableLabs/radium/tree/master/docs/guides#media-queries).
 
-* 2016-09-13 If you need RWD you should add
+* 2016-09-13 If you need RWD you should add `<StyleRoot>`
 
 ```
 ReactDOM.render(
-  <Coverflow
-    displayQuantityOfSide={2}
-    navigation={true}
-    enableHeading={true}
-    media={{
-      '@media (max-width: 900px)': {
-        width: '600px',
-        height: '300px'
-      },
-      '@media (min-width: 900px)': {
-        width: '960px',
-        height: '600px'
-      }
-    }}
-    >
-    <img src='images/album-1.png' alt='Album one' data-action="https://facebook.github.io/react/"/>
-    <img src='images/album-2.png' alt='Album two' data-action="http://passer.cc"/>
-    <img src='images/album-3.png' alt='Album three' data-action="https://doce.cc/"/>
-    <img src='images/album-4.png' alt='Album four' data-action="http://tw.yahoo.com"/>
-  </Coverflow>
+  <StyleRoot>
+    <Coverflow
+      displayQuantityOfSide={2}
+      navigation={true}
+      enableHeading={true}
+      active={0}
+      media={{
+        '@media (max-width: 900px)': {
+          width: '600px',
+          height: '300px'
+        },
+        '@media (min-width: 900px)': {
+          width: '960px',
+          height: '600px'
+        }
+      }}
+      >
+      <img src='images/album-1.png' alt='Album one' data-action="https://facebook.github.io/react/"/>
+      <img src='images/album-2.png' alt='Album two' data-action="http://passer.cc"/>
+      <img src='images/album-3.png' alt='Album three' data-action="https://doce.cc/"/>
+      <img src='images/album-4.png' alt='Album four' data-action="http://tw.yahoo.com"/>
+    </Coverflow>
+  </StyleRoot>
   ,
   document.querySelector('.example_2')
 );
