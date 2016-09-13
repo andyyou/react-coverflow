@@ -35,15 +35,19 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var Coverflow = require('react-coverflow');
 
+var fn = function () {
+  /* do your action */
+}
+
 ReactDOM.render(
   <Coverflow width="960" height="500"
     displayQuantityOfSide={2}
     navigation={false}
     enableScroll={true}
     >
-    <img src='image/path' alt='title or description' url="http://andyyou.github.io/react-coverflow/" />
-    <img src='image/path' alt='title or description' url="http://andyyou.github.io/react-coverflow/"/>
-    <img src='image/path' alt='title or description' url="http://andyyou.github.io/react-coverflow/"/>
+    <img src='image/path' alt='title or description' data-action={action} />
+    <img src='image/path' alt='title or description' data-action="http://andyyou.github.io/react-coverflow/"/>
+    <img src='image/path' alt='title or description' data-action="http://andyyou.github.io/react-coverflow/"/>
   </Coverflow>,
 
   document.querySelector('.content')
@@ -57,6 +61,7 @@ ReactDOM.render(
 * enableHeading [boolean]: Show or hide the heading form img tag alt. (defalut: true)
 * enableScroll [boolean]: Enable scrolling feature.
 * media [object]: To support media query, if you want responsive with parent element you can ignore `width` and `height` props or set it to `auto`.
+* active [number]: The index of images
 
 ```
 media={{
@@ -76,6 +81,8 @@ media={{
 Now, you can use `media` props to support responsive design. The syntax part is come form [Radium](http://projects.formidablelabs.com/radium/)
 You can reference to this [doc](https://github.com/FormidableLabs/radium/tree/master/docs/guides#media-queries).
 
+* 2016-09-13 If you need RWD you should add
+
 ```
 ReactDOM.render(
   <Coverflow
@@ -93,10 +100,10 @@ ReactDOM.render(
       }
     }}
     >
-    <img src='images/album-1.png' alt='Album one' url="https://facebook.github.io/react/"/>
-    <img src='images/album-2.png' alt='Album two' url="http://passer.cc"/>
-    <img src='images/album-3.png' alt='Album three' url="https://doce.cc/"/>
-    <img src='images/album-4.png' alt='Album four' url="http://tw.yahoo.com"/>
+    <img src='images/album-1.png' alt='Album one' data-action="https://facebook.github.io/react/"/>
+    <img src='images/album-2.png' alt='Album two' data-action="http://passer.cc"/>
+    <img src='images/album-3.png' alt='Album three' data-action="https://doce.cc/"/>
+    <img src='images/album-4.png' alt='Album four' data-action="http://tw.yahoo.com"/>
   </Coverflow>
   ,
   document.querySelector('.example_2')
@@ -130,9 +137,24 @@ $ npm run clean
 
 # Development Server
 $ npm run dev
+
+# Deploy examples to gh-pages
+$ npm run build-npm
+$ npm run build-site
+$ git subtree push --prefix site origin gh-pages
+$ npm version patch
+$ npm publish
 ```
 
 ## Release History
+* 2016-09-13
+  - Fix [Unknown Prop Warning](https://facebook.github.io/react/warnings/unknown-prop.html)
+  - Radium updated that if you need RWD feature you need to wrap `<StyleRoot>`
+  - Remove img `url` attribute, use `data-action` instead. when value is string will redirectin url otherwise can put function will be execute.
+  - Add `active` attribute
+* 2016-09-10
+  - Use `postcss-loader` instead of `autoprefixer-loader`
+  - Update babel to v6+
 * 2015-12-12 Fix React 0.14.3 two copies issue
 * 2015-12-10 Update React version.
 * 2015-11-13
@@ -159,6 +181,13 @@ Warning: Any use of a keyed object should be wrapped in React.addons.createFragm
 ```
 
 That because of React 0.14.2 got some change and the component not update before.
+
+* [addCSS issue](https://github.com/FormidableLabs/radium/issues/574)
+
+```
+Error: To use plugins requiring addCSS (e.g. keyframes, media queries), please wrap your application in the StyleRoot component
+```
+
 
 ## Todo
 

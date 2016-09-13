@@ -69,38 +69,53 @@ class Coverflow extends Component {
   }
 
   updateDimensions() {
-    this.setState({
+    const {displayQuantityOfSide} = this.props;
+    let length = React.Children.count(this.props.children);
+    let center = this._center();
+    var state = {
       width: ReactDOM.findDOMNode(this).offsetWidth,
       height: ReactDOM.findDOMNode(this).offsetHeight
-    });
+    };
+    var baseWidth = state.width / (displayQuantityOfSide * 2 + 1);
+    if (typeof this.props.active === 'number' && ~~this.props.active < length) {
+      var active = ~~this.props.active;
+      var move = 0;
+      move = baseWidth * (center - active);
+
+      state = Object.assign({}, state, {
+        current: this.props.active,
+        move: move
+      });
+    }
+    this.setState(state);
   }
 
   render() {
     const {enableScroll} = this.props;
     const {width, height} = this.state;
     return (
-      <div className={styles.container}
-           style={[{width: `${width}px`, height: `${height}px`}, this.props.media]}
-           onWheel={enableScroll ? this._handleWheel.bind(this) : null}
-           onTouchStart={this._handleTouchStart.bind(this)}
-           onTouchMove={this._handleTouchMove.bind(this)}
-           >
-        <div className={styles.coverflow}>
-          <div className={styles.preloader}></div>
-          <div className={styles.stage} ref="stage">
-              {this._renderFigureNodes()}
+        <div className={styles.container}
+             style={[{width: `${width}px`, height: `${height}px`}, this.props.media]}
+             onWheel={enableScroll ? this._handleWheel.bind(this) : null}
+             onTouchStart={this._handleTouchStart.bind(this)}
+             onTouchMove={this._handleTouchMove.bind(this)}
+             >
+          <div className={styles.coverflow}>
+            <div className={styles.preloader}></div>
+            <div className={styles.stage} ref="stage">
+                {this._renderFigureNodes()}
+            </div>
+            {
+              this.props.navigation &&
+              (
+                <div className={styles.actions}>
+                  <button type="button" className={styles.button} onClick={ this._handlePrevFigure.bind(this) }>Previous</button>
+                  <button type="button" className={styles.button} onClick={ this._handleNextFigure.bind(this) }>Next</button>
+                </div>
+              )
+            }
           </div>
-          {
-            this.props.navigation &&
-            (
-              <div className={styles.actions}>
-                <button type="button" className={styles.button} onClick={ this._handlePrevFigure.bind(this) }>Previous</button>
-                <button type="button" className={styles.button} onClick={ this._handleNextFigure.bind(this) }>Next</button>
-              </div>
-            )
-          }
         </div>
-      </div>
     );
   }
 
@@ -116,7 +131,6 @@ class Coverflow extends Component {
     const {displayQuantityOfSide} = this.props;
     const {width} = this.state;
     let style = {};
-    let center = this._center();
     let baseWidth = width / (displayQuantityOfSide * 2 + 1);
     let length = React.Children.count(this.props.children);
     let offset = length % 2 === 0 ? -width/10 : 0;
@@ -148,13 +162,16 @@ class Coverflow extends Component {
     return style;
   }
 
-  _handleFigureClick(index, url, e) {
+  _handleFigureClick(index, action, e) {
     e.preventDefault();
     this.refs.stage.style['pointerEvents'] = 'none';
-
     if (this.state.current === index) {
-      // TODO: support lightbox.
-      window.open(url, '_blank');
+      if (typeof action === 'string') {
+        window.open(action, '_blank');
+      } else if (typeof action === 'function') {
+        action();
+      }
+
       this._removePointerEvents();
     } else {
       const {displayQuantityOfSide} = this.props;
@@ -176,7 +193,7 @@ class Coverflow extends Component {
         <figure className={styles.figure}
           key={index}
           style={style}
-          onClick={ this._handleFigureClick.bind(this, index, figureElement.props.url) }
+          onClick={ this._handleFigureClick.bind(this, index, figureElement.props['data-action']) }
           ref={`figure_${index}`}
           >
           {figureElement}
@@ -262,14 +279,14 @@ class Coverflow extends Component {
     let sign = Math.abs(move) / move;
 
     if (Math.abs(totalMove) >= baseWidth) {
-      let func = null;
+      let fn = null;
       if (sign > 0) {
-        func = this._handlePrevFigure.bind(this);
+        fn = this._handlePrevFigure.bind(this);
       } else if (sign < 0) {
-        func = this._handleNextFigure.bind(this);
+        fn = this._handleNextFigure.bind(this);
       }
-      if (typeof func === 'function') {
-        func();
+      if (typeof fn === 'function') {
+        fn();
       }
     }
   }

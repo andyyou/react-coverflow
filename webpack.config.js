@@ -2,6 +2,8 @@
 var path = require('path');
 var glob = require('glob');
 var webpack = require('webpack');
+var precss = require('precss');
+var autoprefixer = require('autoprefixer');
 
 var plugins = [
   new webpack.optimize.DedupePlugin(),
@@ -57,7 +59,7 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: 'babel?stage=0'
+        loader: 'babel'
       },
       {
         test: /\.js$/,
@@ -66,9 +68,12 @@ module.exports = {
       },
       {
         test: /\.(css|scss)$/,
-        loader: 'style!css?modules&importLoaders=1&localIdentName=[name]__[local]__[hash:base64:5]!autoprefixer!sass'
+        loader: 'style!css?modules&importLoaders=1&localIdentName=[name]__[local]__[hash:base64:5]!sass!postcss'
       }
     ]
   },
-  plugins: plugins
+  plugins: plugins,
+  postcss: function () {
+    return [precss, autoprefixer];
+  }
 };
