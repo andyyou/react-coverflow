@@ -1,7 +1,9 @@
 var path = require('path');
 var glob = require('glob');
 var webpack = require('webpack');
-var jsloader = (process.env.NODE_ENV === 'react-hot') ? 'react-hot!babel?stage=0':'babel?stage=0';
+var precss = require('precss');
+var autoprefixer = require('autoprefixer');
+var jsloader = (process.env.NODE_ENV === 'react-hot') ? 'react-hot!babel':'babel';
 var plugins = [
   new webpack.optimize.DedupePlugin(),
 ];
@@ -51,7 +53,10 @@ var config = {
       }
     ]
   },
-  plugins: plugins
+  plugins: plugins,
+  postcss: function () {
+    return [precss, autoprefixer];
+  }
 };
 
 module.exports = config;
