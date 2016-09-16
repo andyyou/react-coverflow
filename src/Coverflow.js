@@ -54,6 +54,7 @@ class Coverflow extends Component {
       }
     });
     window.addEventListener('resize', this.updateDimensions.bind(this));
+    document.addEventListener('keypress', this._keypress.bind(this), false);
   }
 
   componentWillUnmount() {
@@ -66,6 +67,7 @@ class Coverflow extends Component {
       }
     });
     window.removeEventListener('resize', this.updateDimensions.bind(this));
+    document.removeEventListener('keypress', this._keypress.bind(this));
   }
 
   updateDimensions() {
@@ -125,6 +127,15 @@ class Coverflow extends Component {
   _center() {
     let length = React.Children.count(this.props.children);
     return Math.floor(length / 2);
+  }
+
+  _keypress(e) {
+    console.log('keypress', e.keyCode);
+    if (e.keyCode === 39) {
+      this._handlePrevFigure();
+    } else if (e.keyCode === 37) {
+      this._handleNextFigure();
+    }
   }
 
   _handleFigureStyle(index, current) {

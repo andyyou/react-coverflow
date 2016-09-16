@@ -150,6 +150,8 @@ $ npm publish
 ```
 
 ## Release History
+* 2016-09-16
+  - Add keypress events for prev/next
 * 2016-09-13
   - Fix [Unknown Prop Warning](https://facebook.github.io/react/warnings/unknown-prop.html)
   - Radium updated that if you need RWD feature you need to wrap `<StyleRoot>`
