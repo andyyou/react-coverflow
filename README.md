@@ -150,6 +150,8 @@ $ npm publish
 ```
 
 ## Release History
+* 2016-09-22
+  - Fix issue change `active` can update `current` image.
 * 2016-09-16
   - Add keypress events for prev/next
 * 2016-09-13

@@ -57,6 +57,10 @@ class Coverflow extends Component {
     document.addEventListener('keypress', this._keypress.bind(this), false);
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.updateDimensions(nextProps.active);
+  }
+
   componentWillUnmount() {
     let length = React.Children.count(this.props.children);
 
@@ -70,7 +74,7 @@ class Coverflow extends Component {
     document.removeEventListener('keypress', this._keypress.bind(this));
   }
 
-  updateDimensions() {
+  updateDimensions(active) {
     const {displayQuantityOfSide} = this.props;
     let length = React.Children.count(this.props.children);
     let center = this._center();
@@ -79,13 +83,14 @@ class Coverflow extends Component {
       height: ReactDOM.findDOMNode(this).offsetHeight
     };
     var baseWidth = state.width / (displayQuantityOfSide * 2 + 1);
-    if (typeof this.props.active === 'number' && ~~this.props.active < length) {
-      var active = ~~this.props.active;
+    var active = active || this.props.active;
+    if (typeof active === 'number' && ~~active < length) {
+      active = ~~active;
       var move = 0;
       move = baseWidth * (center - active);
 
       state = Object.assign({}, state, {
-        current: this.props.active,
+        current: active,
         move: move
       });
     }
