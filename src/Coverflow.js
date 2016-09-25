@@ -135,7 +135,6 @@ class Coverflow extends Component {
   }
 
   _keypress(e) {
-    console.log('keypress', e.keyCode);
     if (e.keyCode === 39) {
       this._handlePrevFigure();
     } else if (e.keyCode === 37) {
