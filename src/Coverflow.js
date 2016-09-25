@@ -58,7 +58,8 @@ class Coverflow extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.updateDimensions(nextProps.active);
+    if(this.props.active !== nextProps.active)
+      this.updateDimensions(nextProps.active);
   }
 
   componentWillUnmount() {
