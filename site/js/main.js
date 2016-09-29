@@ -15,6 +15,7 @@ ReactDOM.render(
     displayQuantityOfSide={2}
     navigation={true}
     enableHeading={false}
+    clickable={true}
     >
     <img src='images/album-1.png' alt='Album one' data-action={fn} />
     <img src='images/album-2.png' alt='Album two' data-action="http://passer.cc"/>

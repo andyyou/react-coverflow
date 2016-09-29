@@ -44,6 +44,8 @@ ReactDOM.render(
     displayQuantityOfSide={2}
     navigation={false}
     enableScroll={true}
+    clickable={true}
+    active={0}
     >
     <img src='image/path' alt='title or description' data-action={action} />
     <img src='image/path' alt='title or description' data-action="http://andyyou.github.io/react-coverflow/"/>
@@ -62,6 +64,7 @@ ReactDOM.render(
 * enableScroll [boolean]: Enable scrolling feature.
 * media [object]: To support media query, if you want responsive with parent element you can ignore `width` and `height` props or set it to `auto`.
 * active [number]: The index of images
+* clickable [boolean]: On/Off clickable of images, once set to false will disable whole click ability of images. Default is `true`.
 
 ```
 media={{
@@ -150,6 +153,8 @@ $ npm publish
 ```
 
 ## Release History
+* 2016-09-29
+  - Add `clickable` props to on/off click of image.
 * 2016-09-22
   - Fix issue change `active` can update `current` image.
 * 2016-09-16

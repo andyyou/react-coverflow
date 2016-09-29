@@ -58,8 +58,9 @@ class Coverflow extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if(this.props.active !== nextProps.active)
+    if (this.props.active !== nextProps.active) {
       this.updateDimensions(nextProps.active);
+    }
   }
 
   componentWillUnmount() {
@@ -180,6 +181,10 @@ class Coverflow extends Component {
 
   _handleFigureClick(index, action, e) {
     e.preventDefault();
+    if (!this.props.clickable) {
+      return;
+    }
+
     this.refs.stage.style['pointerEvents'] = 'none';
     if (this.state.current === index) {
       if (typeof action === 'string') {
@@ -312,13 +317,15 @@ Coverflow.propTypes = {
   displayQuantityOfSide: React.PropTypes.number.isRequired,
   navigation: React.PropTypes.bool,
   enableHeading: React.PropTypes.bool,
-  enableScroll: React.PropTypes.bool
+  enableScroll: React.PropTypes.bool,
+  active: React.PropTypes.number
 };
 
 Coverflow.defaultProps = {
   navigation: false,
   enableHeading: true,
-  enableScroll: true
+  enableScroll: true,
+  clickable: true
 };
 
 Coverflow.displayName = 'Coverflow';
