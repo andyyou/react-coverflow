@@ -30,12 +30,12 @@ The required stylesheet using `css-module` and include in package(js file), so y
 
 ## Usage
 
-```
-var React = require('react');
-var ReactDOM = require('react-dom');
-var Coverflow = require('react-coverflow');
+```js
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Coverflow from 'react-coverflow';
 
-var fn = function () {
+const fn = function () {
   /* do your action */
 }
 
@@ -66,7 +66,7 @@ ReactDOM.render(
 * active [number]: The index of images
 * clickable [boolean]: On/Off clickable of images, once set to false will disable whole click ability of images. Default is `true`.
 
-```
+```js
 media={{
   '@media (max-width: 900px)': {
     width: '600px',
@@ -86,7 +86,7 @@ You can reference to this [doc](https://github.com/FormidableLabs/radium/tree/ma
 
 * 2016-09-13 If you need RWD you should add `<StyleRoot>`
 
-```
+```js
 ReactDOM.render(
   <StyleRoot>
     <Coverflow
