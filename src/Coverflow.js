@@ -160,19 +160,19 @@ class Coverflow extends Component {
     // Handle translateX
     if (index === current) {
       style['width'] = `${baseWidth}px`;
-      style['transform'] = `translateX(${this.state.move + offset}px) scale($(this.props.currentFigureScale))`;
+      style['transform'] = `translateX(${this.state.move + offset}px)  scale(${this.props.currentFigureScale}`;
       style['zIndex'] = `${10 - depth}`;
       style['opacity'] = opacity;
     } else if (index < current) {
       // Left side
       style['width'] = `${baseWidth}px`;
-      style['transform'] = `translateX(${this.state.move + offset}px) rotateY(40deg) scale($(this.props.otherFigureScale))`;
+      style['transform'] = `translateX(${this.state.move + offset}px) rotateY(40deg) scale(${this.props.otherFigureScale}`;
       style['zIndex'] = `${10 - depth}`;
       style['opacity'] = opacity;
     } else if (index > current) {
       // Right side
       style['width'] = `${baseWidth}px`;
-      style['transform'] = ` translateX(${this.state.move + offset}px) rotateY(-40deg) scale($(this.props.otherFigureScale))`;
+      style['transform'] = ` translateX(${this.state.move + offset}px) rotateY(-40deg) scale(${this.props.otherFigureScale})`;
       style['zIndex'] = `${10 - depth}`;
       style['opacity'] = opacity;
     }
