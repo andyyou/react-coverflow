@@ -180,21 +180,30 @@ class Coverflow extends Component {
   }
 
   _handleFigureClick(index, action, e) {
-    e.preventDefault();
     if (!this.props.clickable) {
+      e.preventDefault();
       return;
     }
 
     this.refs.stage.style['pointerEvents'] = 'none';
     if (this.state.current === index) {
+      // If on the active figure
       if (typeof action === 'string') {
+        // If action is a URL (string), follow the link
+        e.preventDefault();
         window.open(action, '_blank');
       } else if (typeof action === 'function') {
+        // If a custom action handler was provided
+        e.preventDefault();
         action();
+      } else {
+        // Resume original click
       }
 
       this._removePointerEvents();
     } else {
+      // Move to the selected figure
+      e.preventDefault();
       const {displayQuantityOfSide} = this.props;
       const {width} = this.state;
       let baseWidth = width / (displayQuantityOfSide * 2 + 1);
@@ -207,25 +216,26 @@ class Coverflow extends Component {
   _renderFigureNodes() {
     const {enableHeading} = this.props;
 
-    let figureNodes = React.Children.map(this.props.children, (child, index) => {
-      let figureElement = React.cloneElement(child, {className: styles.cover});
-      let style = this._handleFigureStyle(index, this.state.current);
-      return (
-        <figure className={styles.figure}
-          key={index}
-          style={style}
-          onClick={ this._handleFigureClick.bind(this, index, figureElement.props['data-action']) }
-          ref={`figure_${index}`}
-          >
-          {figureElement}
-          {
-            enableHeading &&
-            <div className={styles.text}>{figureElement.props.alt}</div>
-          }
-        </figure>
-      );
-    });
-    return figureNodes;
+    return(
+      React.Children.map(this.props.children, (child, index) => {
+        let figureElement = React.cloneElement(child, {className: styles.cover});
+        let style = this._handleFigureStyle(index, this.state.current);
+        return (
+          <figure className={styles.figure}
+            key={index}
+            style={style}
+            onClick={ this._handleFigureClick.bind(this, index, figureElement.props['data-action']) }
+            ref={`figure_${index}`}
+            >
+            {figureElement}
+            {
+              enableHeading && !!figureElement.props.alt &&
+              <div className={styles.text}>{figureElement.props.alt}</div>
+            }
+          </figure>
+        );
+      })
+    );
   }
 
   _removePointerEvents() {
