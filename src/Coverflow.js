@@ -246,6 +246,10 @@ class Coverflow extends Component {
     }
   }
 
+  _hasPrevFigure() {
+    return(this.state.current - 1 >= 0);
+  }
+
   _handleNextFigure() {
     const {displayQuantityOfSide} = this.props;
     const {width} = this.state;
@@ -260,8 +264,11 @@ class Coverflow extends Component {
     }
   }
 
+  _hasNextFigure() {
+    return(this.state.current + 1 < this.props.children.length);
+  }
+
   _handleWheel(e) {
-    e.preventDefault();
 
     let delta = e.deltaY * (-120);
     let count = Math.ceil(Math.abs(delta) / 120);
@@ -270,9 +277,11 @@ class Coverflow extends Component {
       const sign = Math.abs(delta) / delta;
       let func = null;
 
-      if (sign > 0) {
+      if (sign > 0 && this._hasPrevFigure()) {
+        e.preventDefault();
         func = this._handlePrevFigure.bind(this);
-      } else if (sign < 0) {
+      } else if (sign < 0 && this._hasNextFigure()) {
+        e.preventDefault();
         func = this._handleNextFigure.bind(this);
       }
 
