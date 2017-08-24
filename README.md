@@ -8,6 +8,8 @@ React Coverflow
 
 ![](https://raw.githubusercontent.com/andyyou/react-coverflow/gh-pages/images/preview.png)
 
+> IMPORTANT!! Because author migrate to Vue.js & not focus on React so I am Looking for maintainer
+
 React Coverflow is a React component for building cover flow style carousel in a convenient way.
 
 Features of `react-coverflow`
