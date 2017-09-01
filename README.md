@@ -9,6 +9,7 @@ React Coverflow
 ![](https://raw.githubusercontent.com/andyyou/react-coverflow/gh-pages/images/preview.png)
 
 **IMPORTANT!! Because author migrates to Vue.js & not focus on React so I am Looking for maintainer**
+if you interesting in this please email [me](andyyu0920@gmail.com)
 
 React Coverflow is a React component for building cover flow style carousel in a convenient way.
 
