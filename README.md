@@ -68,6 +68,8 @@ ReactDOM.render(
 * media [object]: To support media query, if you want responsive with parent element you can ignore `width` and `height` props or set it to `auto`.
 * active [number]: The index of images
 * clickable [boolean]: On/Off clickable of images, once set to false will disable whole click ability of images. Default is `true`.
+* currentFigureScale [number]: The scale factor (float) to be applied on the main image. (default: 1.2)
+* otherFigureScale [number]: The scale factor (float) to be applied on the side images. (default: 1.0)
 
 ```js
 media={{

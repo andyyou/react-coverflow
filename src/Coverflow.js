@@ -160,19 +160,19 @@ class Coverflow extends Component {
     // Handle translateX
     if (index === current) {
       style['width'] = `${baseWidth}px`;
-      style['transform'] = `translateX(${this.state.move + offset}px) scale(1.2)`;
+      style['transform'] = `translateX(${this.state.move + offset}px)  scale(${this.props.currentFigureScale}`;
       style['zIndex'] = `${10 - depth}`;
       style['opacity'] = opacity;
     } else if (index < current) {
       // Left side
       style['width'] = `${baseWidth}px`;
-      style['transform'] = `translateX(${this.state.move + offset}px) rotateY(40deg)`;
+      style['transform'] = `translateX(${this.state.move + offset}px) rotateY(40deg) scale(${this.props.otherFigureScale}`;
       style['zIndex'] = `${10 - depth}`;
       style['opacity'] = opacity;
     } else if (index > current) {
       // Right side
       style['width'] = `${baseWidth}px`;
-      style['transform'] = ` translateX(${this.state.move + offset}px) rotateY(-40deg)`;
+      style['transform'] = ` translateX(${this.state.move + offset}px) rotateY(-40deg) scale(${this.props.otherFigureScale})`;
       style['zIndex'] = `${10 - depth}`;
       style['opacity'] = opacity;
     }
@@ -318,14 +318,18 @@ Coverflow.propTypes = {
   navigation: React.PropTypes.bool,
   enableHeading: React.PropTypes.bool,
   enableScroll: React.PropTypes.bool,
-  active: React.PropTypes.number
+  active: React.PropTypes.number,
+  currentFigureScale: React.PropTypes.number,
+  otherFigureScale: React.PropTypes.number
 };
 
 Coverflow.defaultProps = {
   navigation: false,
   enableHeading: true,
   enableScroll: true,
-  clickable: true
+  clickable: true,
+  currentFigureScale: 1.0,
+  otherFigureScale: 1.2
 };
 
 Coverflow.displayName = 'Coverflow';
