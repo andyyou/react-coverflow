@@ -46,7 +46,7 @@ ReactDOM.render(
     enableScroll={true}
     clickable={true}
     active={0}
-    >
+  >
     <img src='image/path' alt='title or description' data-action={action} />
     <img src='image/path' alt='title or description' data-action="http://andyyou.github.io/react-coverflow/"/>
     <img src='image/path' alt='title or description' data-action="http://andyyou.github.io/react-coverflow/"/>

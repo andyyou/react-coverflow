@@ -54,16 +54,16 @@ ReactDOM.render(
   <StyleRoot>
     <Coverflow
       displayQuantityOfSide={2}
-      navigation={true}
-      enableHeading={true}
+      navigation
+      enableHeading
       media={{
         '@media (max-width: 900px)': {
           width: '600px',
-          height: '300px'
+          height: '300px',
         },
         '@media (min-width: 900px)': {
           width: '960px',
-          height: '600px'
+          height: '600px',
         }
       }}
     >
@@ -82,7 +82,7 @@ class Container extends Component {
     super(props);
 
     this.state = {
-      active: 0
+      active: 0,
     };
   }
 
@@ -90,7 +90,7 @@ class Container extends Component {
     console.log('go');
     var num = Math.floor((Math.random() * 10) + 1);
     this.setState({
-      active: num
+      active: num,
     });
   }
 
@@ -105,11 +105,11 @@ class Container extends Component {
               color: 'white',
               padding: '10px',
               float: 'right',
-              borderTopLeftRadius: '5px',
-              borderTopRightRadius: '5px'
+              borderRadius: '5px',
+              marginBottom: '20px',
             }}
             onClick={() => this._handleClick()}>
-            Click to Randomize
+            Click to Randomize 
           </button>
         </div>
         <Coverflow
