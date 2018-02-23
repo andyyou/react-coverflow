@@ -2,7 +2,6 @@ const path = require('path');
 const glob = require('glob');
 const webpack = require('webpack');
 const precss = require('precss');
-// const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const jsloader = (process.env.NODE_ENV === 'react-hot') ? 'react-hot-loader!babel-loader':'babel-loader';
 
 const plugins = [
@@ -10,7 +9,6 @@ const plugins = [
   new webpack.LoaderOptionsPlugin({
     debug: true,
   }),
-  // new ExtractTextPlugin({ filename: './styles/style.css', disable: false, allChunks: true }),
   new webpack.optimize.UglifyJsPlugin({
     compress: {
       warnings: false
@@ -53,24 +51,6 @@ var config = {
           'sass-loader'
         ],
       },
-      // {
-      //   test: /\.scss$/,
-      //   exclude: /node_modules/,
-      //   loader: 'css-loader'
-      //   // use: ExtractTextPlugin.extract({
-      //   //   fallback: 'style-loader',
-      //   //   use: [
-      //   //     'css-loader',
-      //   //     {
-      //   //       loader: 'sass-loader',
-      //   //       query: {
-      //   //         sourceMap: false,
-      //   //       },
-      //   //     },
-      //   //   ],
-      //   //   publicPath: '../'
-      //   // }),
-      // },
       {
         test: /\.js$/,
         exclude: /node_modules/,

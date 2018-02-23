@@ -13,11 +13,8 @@ ReactDOM.render(
     width={960}
     height={480}
     displayQuantityOfSide={2}
-    navigation={true}
+    navigation={false}
     enableHeading={false}
-    clickable={true}
-    currentFigureScale={1.5}
-    otherFigureScale={0.8}
   >
     <img src='images/album-1.png' alt='Album one' data-action="fn()" />
     <img src='images/album-2.png' alt='Album two' data-action="http://passer.cc"/>
@@ -59,7 +56,6 @@ ReactDOM.render(
       displayQuantityOfSide={2}
       navigation={true}
       enableHeading={true}
-      active={3}
       media={{
         '@media (max-width: 900px)': {
           width: '600px',
@@ -113,14 +109,14 @@ class Container extends Component {
               borderTopRightRadius: '5px'
             }}
             onClick={() => this._handleClick()}>
-            Click to Radom
+            Click to Randomize
           </button>
         </div>
         <Coverflow
           width={960}
           height={480}
           displayQuantityOfSide={2}
-          navigation={true}
+          navigation
           enableHeading={false}
           active={this.state.active}
         >
