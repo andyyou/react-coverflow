@@ -2,8 +2,6 @@
 const path = require('path');
 const glob = require('glob');
 const webpack = require('webpack');
-// const precss = require('precss');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const plugins = [
  new webpack.LoaderOptionsPlugin({
@@ -17,7 +15,6 @@ const plugins = [
     },
   }),
   new webpack.optimize.ModuleConcatenationPlugin(),
-  new ExtractTextPlugin({ filename: './styles/style.css', disable: false, allChunks: true }),
   new webpack.optimize.UglifyJsPlugin({
     compress: {
       warnings: false
@@ -71,21 +68,12 @@ module.exports = {
         loader: 'babel-loader'
       },
       {
-        test: /\.scss$/,
-        exclude: /node_modules/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: [
-            'css-loader',
-            {
-              loader: 'sass-loader',
-              query: {
-                sourceMap: false,
-              },
-            },
-          ],
-          publicPath: '../'
-        }),
+        test: /\.(css|scss)$/,
+        loaders: [
+          'style-loader',
+          'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]__[hash:base64:5]',
+          'sass-loader'
+        ],
       },
       {
         test: /\.js$/,

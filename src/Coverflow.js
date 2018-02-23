@@ -45,6 +45,8 @@ const defaultProps = {
   enableHeading: true,
   enableScroll: true,
   clickable: true,
+  currentFigureScale: 1.5,
+  otherFigureScale: 0.8,
 };
 
 class Coverflow extends Component {

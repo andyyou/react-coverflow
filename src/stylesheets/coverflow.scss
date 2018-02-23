@@ -34,6 +34,8 @@
   backface-visibility: hidden;
   z-index: 9;
   align-self: center;
+  box-shadow: 0 50px 70px rgba(0,0,0,0.5);
+  // TODO: box-reflect crashing the app. Resolve issue
   // -webkit-box-reflect: below 1px -webkit-linear-gradient(bottom, rgba(black, .6) , rgba(black, .1) 20%, rgba(black, 0) 30%, rgba(black, 0));
 }
 
