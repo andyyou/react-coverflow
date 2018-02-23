@@ -1,6 +1,6 @@
 {
   "name": "react-coverflow",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "Carousel of coverflow effect",
   "main": "main.js",
   "scripts": {
@@ -8,8 +8,18 @@
     "prepublish": "rm -rf dist && webpack --progress --colors -d",
     "clean": "rm -rf dist && rm -rf site/javascripts/*.bundle.js",
     "build-npm": "rm -rf dist && webpack --progress --colors -d",
+    "build:watch": "webpack --progress --colors --watch",
     "build-site": "rm -rf site/javascripts/*.bundle.js && webpack --config site/webpack.config.js",
-    "dev": "rm -rf site/javascripts/*.bundle.js && NODE_ENV=react-hot webpack-dev-server --config site/webpack.config.js --progress --colors --inline --hot --port 3000 --host 0.0.0.0 --content-base site"
+    "dev": "rm -rf site/javascripts/*.bundle.js && SET NODE_ENV=react-hot webpack-dev-server --config site/webpack.config.js --progress --colors --inline --hot --port 3000 --host 0.0.0.0 --content-base site"
+  },
+  "postcss": {
+    "parser": "sugarss",
+    "map": false,
+    "from": "/path/to/src.sss",
+    "to": "/path/to/dest.css",
+    "plugins": {
+      "postcss-plugin": {}
+    }
   },
   "keywords": [
     "Carousel",
@@ -26,44 +36,40 @@
   },
   "license": "MIT",
   "dependencies": {
-    "radium": "^0.18.0"
-  },
-  "peerDependencies": {
-    "react": "^15.3.1",
-    "react-dom": "^15.3.1",
-    "react-tap-event-plugin": "^0.2.1 || ^1.0.0 || ^2.0.0"
+    "prop-types": "^15.6.0",
+    "radium": "^0.22.0"
   },
   "url": "https://github.com/andyyou/react-coverflow.git",
   "devDependencies": {
-    "react": "^15.3.1",
-    "react-dom": "^15.3.1",
-    "autoprefixer": "^6.4.1",
-    "react-tap-event-plugin": "^2.0.0",
-    "autoprefixer-loader": "^3.1.0",
     "babel-core": "^6.14.0",
-    "babel-eslint": "^6.1.2",
-    "babel-loader": "^6.2.5",
+    "babel-eslint": "^8.2.2",
+    "babel-loader": "^7.1.2",
     "babel-plugin-transform-class-properties": "^6.11.5",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
     "babel-plugin-transform-runtime": "^6.15.0",
     "babel-preset-es2015": "^6.14.0",
     "babel-preset-react": "^6.11.1",
     "babel-preset-stage-0": "^6.5.0",
-    "chai": "^3.5.0",
-    "css-loader": "^0.25.0",
-    "eslint": "^1.4.3",
+    "chai": "^4.1.2",
+    "css-loader": "^0.28.10",
+    "eslint": "^4.18.1",
     "eslint-loader": "^1.1.1",
-    "extract-text-webpack-plugin": "^1.0.1",
-    "file-loader": "^0.9.0",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "file-loader": "^1.1.9",
     "glob": "^7.0.6",
-    "mocha": "^3.0.2",
-    "node-sass": "^3.9.3",
-    "postcss-loader": "^0.13.0",
-    "precss": "^1.4.0",
-    "react-hot-loader": "^1.3.0",
-    "sass-loader": "^4.0.2",
-    "style-loader": "^0.13.1",
-    "webpack": "^1.13.2",
-    "webpack-dev-server": "^1.15.1"
+    "mocha": "^5.0.1",
+    "node-sass": "^4.7.2",
+    "open-browser-webpack-plugin": "0.0.5",
+    "postcss-load-config": "^1.2.0",
+    "postcss-loader": "^2.1.0",
+    "precss": "^3.1.1",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-hot-loader": "^3.1.3",
+    "react-tap-event-plugin": "^3.0.2",
+    "sass-loader": "^6.0.6",
+    "style-loader": "^0.20.2",
+    "webpack": "^3.11.0",
+    "webpack-dev-server": "^2.9.6"
   }
 }
