@@ -32,23 +32,6 @@ let HandleAnimationState = function() {
   this._removePointerEvents();
 };
 
-const propTypes = {
-  displayQuantityOfSide: PropTypes.number.isRequired,
-  navigation: PropTypes.bool,
-  enableHeading: PropTypes.bool,
-  enableScroll: PropTypes.bool,
-  active: PropTypes.number,
-};
-
-const defaultProps = {
-  navigation: false,
-  enableHeading: true,
-  enableScroll: true,
-  clickable: true,
-  currentFigureScale: 1.5,
-  otherFigureScale: 0.8,
-};
-
 class Coverflow extends Component {
   /**
    * Life cycle events
@@ -62,8 +45,32 @@ class Coverflow extends Component {
       height: this.props.height || 'auto',
     };
   }
+  
+  static propTypes = {
+    children: PropTypes.node.isRequired,
+    displayQuantityOfSide: PropTypes.number.isRequired,
+    navigation: PropTypes.bool,
+    enableHeading: PropTypes.bool,
+    enableScroll: PropTypes.bool,
+    clickable: PropTypes.bool,
+    currentFigureScale: PropTypes.number,
+    otherFigureScale: PropTypes.number,
+    active: PropTypes.number,
+    media: PropTypes.object,
+  };
+
+  static defaultProps = {
+    navigation: false,
+    enableHeading: true,
+    enableScroll: true,
+    clickable: true,
+    currentFigureScale: 1.5,
+    otherFigureScale: .8,
+    media: {},
+  };
 
   componentDidMount() {
+    console.log('props: ', this.props);
     this.updateDimensions();
     let length = React.Children.count(this.props.children);
 
@@ -200,8 +207,7 @@ class Coverflow extends Component {
     return style;
   }
 
-
-  _handleFigureClick(index, action) {
+  _handleFigureClick = (index, action, e) => {
     if (!this.props.clickable) {
       e.preventDefault();
       return;
@@ -214,12 +220,6 @@ class Coverflow extends Component {
         // If action is a URL (string), follow the link
         e.preventDefault();
         window.open(action, '_blank');
-      } else if (typeof action === 'function') {
-        // If a custom action handler was provided
-        e.preventDefault();
-        action();
-      } else {
-        // Resume original click
       }
 
       this._removePointerEvents();
@@ -231,7 +231,7 @@ class Coverflow extends Component {
       let baseWidth = width / (displayQuantityOfSide * 2 + 1);
       let distance = this._center() - index;
       let move = distance * baseWidth;
-      this.setState({current: index, move: move});
+      this.setState({ current: index, move: move });
     }
   }
 
@@ -344,10 +344,6 @@ class Coverflow extends Component {
   }
 };
 
-
-Coverflow.propTypes = propTypes;
-
-Coverflow.defaultProps = defaultProps;
 
 Coverflow.displayName = 'Coverflow';
 
