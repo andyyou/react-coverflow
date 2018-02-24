@@ -112,7 +112,7 @@ class Coverflow extends Component {
       height: ReactDOM.findDOMNode(this).offsetHeight,
     };
     var baseWidth = state.width / (displayQuantityOfSide * 2 + 1);
-    var active = active || this.props.active;
+    var active = (typeof active === 'number') ? active : this.props.active;
     if (typeof active === 'number' && ~~active < length) {
       active = ~~active;
       var move = 0;
