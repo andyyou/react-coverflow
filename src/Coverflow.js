@@ -200,22 +200,32 @@ class Coverflow extends Component {
     return style;
   }
 
-  _handleFigureClick = (index, action, e) => {
-    e.preventDefault();
+
+  _handleFigureClick(index, action) {
     if (!this.props.clickable) {
+      e.preventDefault();
       return;
     }
 
     this.refs.stage.style['pointerEvents'] = 'none';
     if (this.state.current === index) {
+      // If on the active figure
       if (typeof action === 'string') {
+        // If action is a URL (string), follow the link
+        e.preventDefault();
         window.open(action, '_blank');
       } else if (typeof action === 'function') {
+        // If a custom action handler was provided
+        e.preventDefault();
         action();
+      } else {
+        // Resume original click
       }
 
       this._removePointerEvents();
     } else {
+      // Move to the selected figure
+      e.preventDefault();
       const {displayQuantityOfSide} = this.props;
       const {width} = this.state;
       let baseWidth = width / (displayQuantityOfSide * 2 + 1);
