@@ -46,7 +46,7 @@ ReactDOM.render(
     enableScroll={true}
     clickable={true}
     active={0}
-    >
+  >
     <img src='image/path' alt='title or description' data-action={action} />
     <img src='image/path' alt='title or description' data-action="http://andyyou.github.io/react-coverflow/"/>
     <img src='image/path' alt='title or description' data-action="http://andyyou.github.io/react-coverflow/"/>
@@ -65,6 +65,8 @@ ReactDOM.render(
 * media [object]: To support media query, if you want responsive with parent element you can ignore `width` and `height` props or set it to `auto`.
 * active [number]: The index of images
 * clickable [boolean]: On/Off clickable of images, once set to false will disable whole click ability of images. Default is `true`.
+* currentFigureScale [number]: The scale factor (float) to be applied on the main image. (default: 1.2)
+* otherFigureScale [number]: The scale factor (float) to be applied on the side images. (default: 1.0)
 
 ```js
 media={{
@@ -120,6 +122,7 @@ ReactDOM.render(
 
 * [andyyou](https://github.com/andyyou)
 * [Calvert Yang](https://github.com/CalvertYang)
+* [Ariel Salem](https://github.com/asalem1)
 
 Use [Github issues](https://github.com/andyyou/react-coverflow/issues) for requests
 
