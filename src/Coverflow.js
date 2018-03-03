@@ -76,7 +76,7 @@ class Coverflow extends Component {
 
     TRANSITIONS.forEach(event => {
       for (let i = 0; i < length; i++) {
-        var figureID = `figure_${i}`;
+        let figureID = `figure_${i}`;
         this.refs[figureID].addEventListener(event, HandleAnimationState.bind(this));
       }
     });
@@ -95,7 +95,7 @@ class Coverflow extends Component {
 
     TRANSITIONS.forEach(event => {
       for (let i = 0; i < length; i++) {
-        var figureID = `figure_${i}`;
+        let figureID = `figure_${i}`;
         this.refs[figureID].removeEventListener(event, HandleAnimationState.bind(this));
       }
     });
@@ -107,16 +107,16 @@ class Coverflow extends Component {
     const { displayQuantityOfSide } = this.props;
     let length = React.Children.count(this.props.children);
     let center = this._center();
-    var state = {
+    let state = {
       width: ReactDOM.findDOMNode(this).offsetWidth,
       height: ReactDOM.findDOMNode(this).offsetHeight,
     };
-    var baseWidth = state.width / (displayQuantityOfSide * 2 + 1);
-    var active = (typeof active === 'number') ? active : this.props.active;
+    let baseWidth = state.width / (displayQuantityOfSide * 2 + 1);
+    let activeImg = (typeof active === 'number') ? active : this.props.active;
     if (typeof active === 'number' && ~~active < length) {
-      active = ~~active;
-      var move = 0;
-      move = baseWidth * (center - active);
+      activeImg = ~~active;
+      let move = 0;
+      move = baseWidth * (center - activeImg);
 
       state = Object.assign({}, state, {
         current: active,
@@ -266,13 +266,18 @@ class Coverflow extends Component {
   _handlePrevFigure = () => {
     const { displayQuantityOfSide } = this.props;
     const { width } = this.state;
-    let current = this.state.current;
+    let { current } = this.state;
     let baseWidth = width / (displayQuantityOfSide * 2 + 1);
     let distance = this._center() - (current - 1);
     let move = distance * baseWidth;
+    
+    console.log('prev current: ', current);
 
-    if (current - 1 >= 0) {
+    if (current >= 1) {
       this.setState({ current: current - 1, move: move });
+      TOUCH.lastMove = move;
+    } else {
+      this.setState({ current: this.props.children.length, move: move });
       TOUCH.lastMove = move;
     }
   }
@@ -280,13 +285,18 @@ class Coverflow extends Component {
   _handleNextFigure = () => {
     const { displayQuantityOfSide } = this.props;
     const { width } = this.state;
-    let current = this.state.current;
+    let { current } = this.state;
     let baseWidth = width / (displayQuantityOfSide * 2 + 1);
     let distance = this._center() - (current + 1);
     let move = distance * baseWidth;
 
+    console.log('next current: ', current);
+
     if (current + 1 < this.props.children.length) {
       this.setState({ current: current + 1, move: move });
+      TOUCH.lastMove = move;
+    } else {
+      this.setState({ current: 1, move: move });
       TOUCH.lastMove = move;
     }
   }

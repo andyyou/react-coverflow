@@ -5,10 +5,11 @@
   "main": "main.js",
   "scripts": {
     "test": "make test",
-    "prepublish": "rm -rf dist && webpack --progress --colors -d",
+    "prepublishOnly": "rm -rf dist && webpack --progress --colors -d",
     "clean": "rm -rf dist && rm -rf site/javascripts/*.bundle.js",
     "build-npm": "rm -rf dist && webpack --progress --colors -d",
     "build:watch": "webpack --progress --colors --watch",
+    "lint": "eslint ./src/Coverflow.js eslint ./site/js/main.js",
     "build-site": "rm -rf site/javascripts/*.bundle.js && webpack --config site/webpack.config.js",
     "dev": "rm -rf site/javascripts/*.bundle.js && SET NODE_ENV=react-hot webpack-dev-server --config site/webpack.config.js --progress --colors --inline --hot --port 3000 --host 0.0.0.0 --content-base site"
   },
@@ -36,8 +37,11 @@
   },
   "license": "MIT",
   "dependencies": {
+    "babel-runtime": "^6.26.0",
     "prop-types": "^15.6.0",
-    "radium": "^0.22.0"
+    "radium": "^0.22.0",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0"
   },
   "url": "https://github.com/andyyou/react-coverflow.git",
   "devDependencies": {
@@ -53,7 +57,11 @@
     "chai": "^4.1.2",
     "css-loader": "^0.28.10",
     "eslint": "^4.18.1",
+    "eslint-config-airbnb": "^16.1.0",
     "eslint-loader": "^1.1.1",
+    "eslint-plugin-import": "^2.9.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.7.0",
     "extract-text-webpack-plugin": "^3.0.2",
     "file-loader": "^1.1.9",
     "glob": "^7.0.6",
@@ -63,8 +71,6 @@
     "postcss-load-config": "^1.2.0",
     "postcss-loader": "^2.1.0",
     "precss": "^3.1.1",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
     "react-hot-loader": "^3.1.3",
     "react-tap-event-plugin": "^3.0.2",
     "sass-loader": "^6.0.6",

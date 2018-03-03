@@ -1,4 +1,5 @@
 {
+  "extends": "airbnb",
   "env": {
     "browser": true,
     "node": true,
@@ -23,7 +24,7 @@
       "objectLiteralShorthandProperties": true, 
       "spread": true, 
       "superInFunctions": true, 
-      "templateStrings": true, 
+      "templateStrings": true,
     },
   },
   "rules": {
@@ -32,7 +33,9 @@
      *  http://www.cnblogs.com/qianlegeqian/p/4728170.html
      *  https://github.com/airbnb/javascript/blob/master/packages/eslint-config-airbnb/base/index.js
      */
-
+    "no-underscore-dangle": 0,
+    "no-console": "off",
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "semi": [2, "always"], // 句尾強制分號
     "curly": 0,
     "radix": 2,

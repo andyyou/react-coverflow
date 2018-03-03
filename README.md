@@ -198,8 +198,7 @@ Error: To use plugins requiring addCSS (e.g. keyframes, media queries), please w
 
 ## Todo
 
-* Update Documentation to refer to default props
-* Imporve performance in Mobile(Touch events part)
+* Improve performance in Mobile(Touch events part)
 * Write test case
 * Allow for Loop Scrolling
 * Allow for mapping of children
