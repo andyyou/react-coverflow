@@ -1,11 +1,20 @@
-var path = require('path');
-var glob = require('glob');
-var webpack = require('webpack');
-var precss = require('precss');
-var autoprefixer = require('autoprefixer');
-var jsloader = (process.env.NODE_ENV === 'react-hot') ? 'react-hot!babel':'babel';
-var plugins = [
-  new webpack.optimize.DedupePlugin(),
+const path = require('path');
+const glob = require('glob');
+const webpack = require('webpack');
+const precss = require('precss');
+const jsloader = (process.env.NODE_ENV === 'react-hot') ? 'react-hot-loader!babel-loader':'babel-loader';
+
+const plugins = [
+  new webpack.optimize.ModuleConcatenationPlugin(),
+  new webpack.LoaderOptionsPlugin({
+    debug: true,
+  }),
+  new webpack.optimize.UglifyJsPlugin({
+    compress: {
+      warnings: false
+    }
+  }),
+  new webpack.HotModuleReplacementPlugin(),
 ];
 
 var entry = {};
@@ -25,38 +34,36 @@ var config = {
   },
   devtool: 'eval-source-map',
   resolve: {
-    extensions: ['', '.js', '.jsx', '.json', '.scss', '.css']
-  },
-  eslint: {
-    configFile: path.join(__dirname, '../.eslintrc')
+    extensions: ['.js', '.jsx', '.json', '.scss', '.css']
   },
   module: {
-    loaders: [
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: 'babel-loader'
+      },
+      {
+        test: /\.(css|scss)$/,
+        loaders: [
+          'style-loader',
+          'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]__[hash:base64:5]',
+          'sass-loader'
+        ],
+      },
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: 'eslint-loader'
+      },
       {
         test: /\.js$/,
         exclude: /node_modules/,
         loader: jsloader,
       },
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        loader: 'eslint'
-      },
-      {
-        test: /\.(css|scss)$/,
-        loaders: [
-          'style',
-          'css?modules&importLoaders=1&localIdentName=[name]__[local]__[hash:base64:5]',
-          'autoprefixer',
-          'sass'
-        ],
-      }
-    ]
+    ],
   },
   plugins: plugins,
-  postcss: function () {
-    return [precss, autoprefixer];
-  }
 };
 
 module.exports = config;

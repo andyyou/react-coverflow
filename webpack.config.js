@@ -1,21 +1,30 @@
 'use strict';
-var path = require('path');
-var glob = require('glob');
-var webpack = require('webpack');
-var precss = require('precss');
-var autoprefixer = require('autoprefixer');
+const path = require('path');
+const glob = require('glob');
+const webpack = require('webpack');
 
-var plugins = [
-  new webpack.optimize.DedupePlugin(),
+const plugins = [
+ new webpack.LoaderOptionsPlugin({
+    debug: true,
+    test: /\.js$/,
+    options: {
+      eslint: {
+        configFile: path.resolve(__dirname, '.eslintrc'),
+        cache: false,
+      }
+    },
+  }),
+  new webpack.optimize.ModuleConcatenationPlugin(),
   new webpack.optimize.UglifyJsPlugin({
     compress: {
       warnings: false
     }
   }),
+  new webpack.HotModuleReplacementPlugin(),
 ];
 
-var entry = {};
-var mainEntryPoints = glob.sync(
+const entry = {};
+const mainEntryPoints = glob.sync(
   path.join(__dirname, './src/*.js')
 );
 
@@ -24,7 +33,7 @@ entry['react-coverflow'] = mainEntryPoints;
 module.exports = {
   entry: entry,
   output: {
-    path: 'dist',
+    path: path.resolve(__dirname, 'dist'),
     filename: '[name].js',
     libraryTarget: 'umd',
     library: 'react-converflow',
@@ -35,7 +44,7 @@ module.exports = {
         root: 'React',
         commonjs2: 'react',
         commonjs: 'react',
-        amd: 'react'
+        amd: 'react',
       }
     },
     {
@@ -43,37 +52,35 @@ module.exports = {
         root: 'ReactDOM',
         commonjs2: 'react-dom',
         commonjs: 'react-dom',
-        amd: 'react-dom'
+        amd: 'react-dom',
       }
     }
   ],
   devtool: 'eval-source-map',
   resolve: {
-    extensions: ['', '.js', '.jsx', '.json', '.scss', '.css']
-  },
-  eslint: {
-    configFile: './.eslintrc'
+    extensions: ['.js', '.jsx', '.json', '.scss', '.css'],
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: 'babel'
-      },
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        loader: 'eslint'
+        loader: 'babel-loader'
       },
       {
         test: /\.(css|scss)$/,
-        loader: 'style!css?modules&importLoaders=1&localIdentName=[name]__[local]__[hash:base64:5]!sass!postcss'
-      }
-    ]
+        loaders: [
+          'style-loader',
+          'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]__[hash:base64:5]',
+          'sass-loader'
+        ],
+      },
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: 'eslint-loader'
+      },
+    ],
   },
   plugins: plugins,
-  postcss: function () {
-    return [precss, autoprefixer];
-  }
 };

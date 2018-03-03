@@ -46,8 +46,8 @@ ReactDOM.render(
     enableScroll={true}
     clickable={true}
     active={0}
-    >
-    <img src='image/path' alt='title or description' data-action={action} />
+  >
+    <img src='image/path' alt='title or description' onClick={() => fn()} />
     <img src='image/path' alt='title or description' data-action="http://andyyou.github.io/react-coverflow/"/>
     <img src='image/path' alt='title or description' data-action="http://andyyou.github.io/react-coverflow/"/>
   </Coverflow>,
@@ -56,28 +56,20 @@ ReactDOM.render(
 );
 ```
 
-#### Options
+#### Properties
+| Name                 | Type      | Default           | Description                                  |
+|----------------------|-----------|-------------------|----------------------------------------------|
+| children             | node      |                   | should be `<img />` nodes                    |
+| displayQuantityOfSide| number    |                   | The number of display image from center to the one side end.|
+| navigation           | boolean   | false             | Enable navigation buttons (prev, next).      |
+| enableHeading        | boolean   | true              | Shows the img alt as the label for the img.  |
+| enableScroll         | boolean   | true              | Enable scrolling feature.                    |
+| media                | object    |                   | To support media query, if you want responsive with parent element you can ignore `width` and `height` props or set it to `auto`. |
+| active               | number    | middle child node | The index of the image you want to be active.|
+| clickable            | boolean   | true              | Makes images clickable, setting to false will disable clickability of images. |
+| currentFigureScale   | number    | 1.5               | The scale factor (float) to be applied on the active image. |
+| otherFigureScale     | number    | .8                | The scale factor (float) to be applied on the inactive images.|
 
-* displayQuantityOfSide [number]: The number of display image from center to the one side end.
-* navigation [boolean]: Enable navigation buttons (prev, next). (defalut: false)
-* enableHeading [boolean]: Show or hide the heading form img tag alt. (defalut: true)
-* enableScroll [boolean]: Enable scrolling feature.
-* media [object]: To support media query, if you want responsive with parent element you can ignore `width` and `height` props or set it to `auto`.
-* active [number]: The index of images
-* clickable [boolean]: On/Off clickable of images, once set to false will disable whole click ability of images. Default is `true`.
-
-```js
-media={{
-  '@media (max-width: 900px)': {
-    width: '600px',
-    height: '300px'
-  },
-  '@media (min-width: 900px)': {
-    width: '960px',
-    height: '600px'
-  }
-}}
-```
 
 #### Responsive
 
@@ -120,6 +112,7 @@ ReactDOM.render(
 
 * [andyyou](https://github.com/andyyou)
 * [Calvert Yang](https://github.com/CalvertYang)
+* [Ariel Salem](https://github.com/asalem1)
 
 Use [Github issues](https://github.com/andyyou/react-coverflow/issues) for requests
 
@@ -153,6 +146,8 @@ $ npm publish
 ```
 
 ## Release History
+* 2018-02-24
+  - Fixed deprecation errors / warnings, updated packages.
 * 2016-09-29
   - Add `clickable` props to on/off click of image.
 * 2016-09-22
@@ -203,5 +198,10 @@ Error: To use plugins requiring addCSS (e.g. keyframes, media queries), please w
 
 ## Todo
 
+* Update Documentation to refer to default props
 * Imporve performance in Mobile(Touch events part)
 * Write test case
+* Allow for Loop Scrolling
+* Allow for mapping of children
+* Add further customization options
+* Add Prev/Next Arrows instead of Buttons

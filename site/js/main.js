@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import Coverflow from '../../src/Coverflow';
-import {StyleRoot} from 'radium';
+import { StyleRoot } from 'radium';
 
 var fn = () => {
   console.log('Album one');
@@ -13,11 +13,10 @@ ReactDOM.render(
     width={960}
     height={480}
     displayQuantityOfSide={2}
-    navigation={true}
+    navigation={false}
     enableHeading={false}
-    clickable={true}
-    >
-    <img src='images/album-1.png' alt='Album one' data-action={fn} />
+  >
+    <img src='images/album-1.png' alt='Album one' onClick={() => fn()} />
     <img src='images/album-2.png' alt='Album two' data-action="http://passer.cc"/>
     <img src='images/album-3.png' alt='Album three' data-action="https://doce.cc/"/>
     <img src='images/album-4.png' alt='Album four' data-action="http://tw.yahoo.com"/>
@@ -53,27 +52,26 @@ ReactDOM.render(
 
 ReactDOM.render(
   <StyleRoot>
-  <Coverflow
-    displayQuantityOfSide={2}
-    navigation={true}
-    enableHeading={true}
-    active={3}
-    media={{
-      '@media (max-width: 900px)': {
-        width: '600px',
-        height: '300px'
-      },
-      '@media (min-width: 900px)': {
-        width: '960px',
-        height: '600px'
-      }
-    }}
+    <Coverflow
+      displayQuantityOfSide={2}
+      navigation
+      enableHeading
+      media={{
+        '@media (max-width: 900px)': {
+          width: '600px',
+          height: '300px',
+        },
+        '@media (min-width: 900px)': {
+          width: '960px',
+          height: '600px',
+        }
+      }}
     >
-    <img src='images/album-1.png' alt='Album one' data-action="https://facebook.github.io/react/"/>
-    <img src='images/album-2.png' alt='Album two' data-action="http://passer.cc"/>
-    <img src='images/album-3.png' alt='Album three' data-action="https://doce.cc/"/>
-    <img src='images/album-4.png' alt='Album four' data-action="http://tw.yahoo.com"/>
-  </Coverflow>
+      <img src='images/album-1.png' alt='Album one' data-action="https://facebook.github.io/react/"/>
+      <img src='images/album-2.png' alt='Album two' data-action="http://passer.cc"/>
+      <img src='images/album-3.png' alt='Album three' data-action="https://doce.cc/"/>
+      <img src='images/album-4.png' alt='Album four' data-action="http://tw.yahoo.com"/>
+    </Coverflow>
   </StyleRoot>
   ,
   document.querySelector('.example_2')
@@ -84,8 +82,16 @@ class Container extends Component {
     super(props);
 
     this.state = {
-      active: 0
+      active: 0,
     };
+  }
+
+  _handleClick = () => {
+    console.log('go');
+    var num = Math.floor((Math.random() * 10) + 1);
+    this.setState({
+      active: num,
+    });
   }
 
   render() {
@@ -99,23 +105,22 @@ class Container extends Component {
               color: 'white',
               padding: '10px',
               float: 'right',
-              borderTopLeftRadius: '5px',
-              borderTopRightRadius: '5px'
+              borderRadius: '5px',
+              marginBottom: '20px',
             }}
-            onClick={this._handleClick.bind(this)}>
-            Click to Radom
+            onClick={() => this._handleClick()}>
+            Click to Randomize 
           </button>
         </div>
-
         <Coverflow
           width={960}
           height={480}
           displayQuantityOfSide={2}
-          navigation={true}
+          navigation
           enableHeading={false}
           active={this.state.active}
-          >
-          <img src='images/album-1.png' alt='Album one' data-action={fn} />
+        >
+          <img src='images/album-1.png' alt='Album one' onClick={() => fn()} />
           <img src='images/album-2.png' alt='Album two' data-action="http://passer.cc"/>
           <img src='images/album-3.png' alt='Album three' data-action="https://doce.cc/"/>
           <img src='images/album-4.png' alt='Album four' data-action="http://tw.yahoo.com"/>
@@ -129,14 +134,6 @@ class Container extends Component {
         </Coverflow>
       </div>
     );
-  }
-
-  _handleClick() {
-    console.log('go');
-    var num = Math.floor((Math.random() * 10) + 1);
-    this.setState({
-      active: num
-    });
   }
 };
 
