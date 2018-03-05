@@ -70,7 +70,9 @@ ReactDOM.render(
 );
 ```
 
-In order to pass functions to the images, you can simply wrap the `<img />` in a `<div>`. You should make sure to give your img specific styling properties to confine it to the parent div. 
+In order to pass functions to the images, you can simply wrap the `<img />` in a `<div>`. You should make sure to give your img specific styling properties to confine it to the parent div.
+
+For more examples, on how to use React Coverflow, please visit http://andyyou.github.io/react-coverflow/
 
 #### Properties
 | Name                 | Type      | Default           | Description                                  |
