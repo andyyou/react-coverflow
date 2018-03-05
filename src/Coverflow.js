@@ -57,6 +57,7 @@ class Coverflow extends Component {
     otherFigureScale: PropTypes.number,
     active: PropTypes.number,
     media: PropTypes.object,
+    infiniteScroll: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -67,10 +68,10 @@ class Coverflow extends Component {
     currentFigureScale: 1.5,
     otherFigureScale: .8,
     media: {},
+    infiniteScroll: false,
   };
 
   componentDidMount() {
-    console.log('props: ', this.props);
     this.updateDimensions();
     let length = React.Children.count(this.props.children);
 
@@ -120,15 +121,17 @@ class Coverflow extends Component {
 
       state = Object.assign({}, state, {
         current: active,
-        move: move,
+        move,
       });
     }
     this.setState(state);
   }
 
   render() {
-    const { enableScroll } = this.props;
-    const { width, height } = this.state;
+    const { enableScroll, navigation, infiniteScroll } = this.props;
+    const { width, height, current } = this.state;
+    let renderPrevBtn = infiniteScroll ? true : current > 0;
+    let renderNextBtn = infiniteScroll ? true : current < this.props.children.length - 1;
     return (
       <div
         className={styles.container}
@@ -143,13 +146,27 @@ class Coverflow extends Component {
             {this._renderFigureNodes()}
           </div>
           {
-            this.props.navigation &&
-            (
+            navigation &&
               <div className={styles.actions}>
-                <button type="button" className={styles.button} onClick={() => this._handlePrevFigure() }>Previous</button>
-                <button type="button" className={styles.button} onClick={() => this._handleNextFigure() }>Next</button>
+                {renderPrevBtn &&
+                  <button
+                    type="button"
+                    className={styles.button}
+                    onClick={() => this._handlePrevFigure() }
+                  >
+                    Previous
+                  </button>
+                }
+                {renderNextBtn &&
+                  <button
+                    type="button"
+                    className={styles.button}
+                    onClick={() => this._handleNextFigure() }
+                  >
+                    Next
+                  </button>
+                }
               </div>
-            )
           }
         </div>
       </div>
@@ -218,7 +235,6 @@ class Coverflow extends Component {
       // If on the active figure
       if (typeof action === 'string') {
         // If action is a URL (string), follow the link
-        e.preventDefault();
         window.open(action, '_blank');
       }
 
@@ -226,20 +242,21 @@ class Coverflow extends Component {
     } else {
       // Move to the selected figure
       e.preventDefault();
-      const {displayQuantityOfSide} = this.props;
-      const {width} = this.state;
+      const { displayQuantityOfSide } = this.props;
+      const { width } = this.state;
       let baseWidth = width / (displayQuantityOfSide * 2 + 1);
       let distance = this._center() - index;
       let move = distance * baseWidth;
-      this.setState({ current: index, move: move });
+      this.setState({ current: index, move });
     }
   }
 
-  _renderFigureNodes() {
+  _renderFigureNodes = () => {
     const { enableHeading } = this.props;
+    const { current } = this.state;
     let figureNodes = React.Children.map(this.props.children, (child, index) => {
       let figureElement = React.cloneElement(child, {className: styles.cover});
-      let style = this._handleFigureStyle(index, this.state.current);
+      let style = this._handleFigureStyle(index, current);
       return (
         <figure
           className={styles.figure}
@@ -263,50 +280,48 @@ class Coverflow extends Component {
     this.refs.stage.style['pointerEvents'] = 'auto';
   }
 
+  _hasPrevFigure = () => {
+    return this.state.current - 1 >= 0;
+  }
+
+  _hasNextFigure = () => {
+    return this.state.current + 1 < this.props.children.length;
+  }
+
   _handlePrevFigure = () => {
-    const { displayQuantityOfSide } = this.props;
+    const { displayQuantityOfSide, infiniteScroll } = this.props;
     const { width } = this.state;
     let { current } = this.state;
     let baseWidth = width / (displayQuantityOfSide * 2 + 1);
-    let distance = this._center() - (current - 1);
+    let distance = this._center() - (current - 1 < 0 ? this.props.children.length - 1: current - 1);
     let move = distance * baseWidth;
-    
-    console.log('prev current: ', current);
 
-    if (current >= 1) {
-      this.setState({ current: current - 1, move: move });
-      TOUCH.lastMove = move;
-    } else {
-      this.setState({ current: this.props.children.length, move: move });
+    if (current - 1 >= 0) {
+      this.setState({ current: current - 1, move });
       TOUCH.lastMove = move;
     }
-  }
-
-  _hasPrevFigure() {
-    return(this.state.current - 1 >= 0);
+    if (current - 1 < 0 && infiniteScroll) {
+      this.setState({ current: this.props.children.length - 1, move });
+      TOUCH.lastMove = move;
+    }
   }
 
   _handleNextFigure = () => {
-    const { displayQuantityOfSide } = this.props;
+    const { displayQuantityOfSide, infiniteScroll } = this.props;
     const { width } = this.state;
     let { current } = this.state;
     let baseWidth = width / (displayQuantityOfSide * 2 + 1);
-    let distance = this._center() - (current + 1);
+    let distance = this._center() - (current + 1 >= this.props.children.length ? 0 : current + 1);
     let move = distance * baseWidth;
 
-    console.log('next current: ', current);
-
     if (current + 1 < this.props.children.length) {
-      this.setState({ current: current + 1, move: move });
-      TOUCH.lastMove = move;
-    } else {
-      this.setState({ current: 1, move: move });
+      this.setState({ current: current + 1, move });
       TOUCH.lastMove = move;
     }
-  }
-
-  _hasNextFigure() {
-    return(this.state.current + 1 < this.props.children.length);
+    if (current + 1 >= this.props.children.length && infiniteScroll) {
+      this.setState({ current: 0, move });
+      TOUCH.lastMove = move;
+    }
   }
 
   _handleWheel(e) {
@@ -320,10 +335,10 @@ class Coverflow extends Component {
 
       if (sign > 0 && this._hasPrevFigure()) {
         e.preventDefault();
-        func = this._handlePrevFigure.bind(this);
+        func = this._handlePrevFigure();
       } else if (sign < 0 && this._hasNextFigure()) {
         e.preventDefault();
-        func = this._handleNextFigure.bind(this);
+        func = this._handleNextFigure();
       }
 
       if (typeof func === 'function') {
@@ -352,9 +367,9 @@ class Coverflow extends Component {
     if (Math.abs(totalMove) >= baseWidth) {
       let fn = null;
       if (sign > 0) {
-        fn = this._handlePrevFigure.bind(this);
+        fn = this._handlePrevFigure();
       } else if (sign < 0) {
-        fn = this._handleNextFigure.bind(this);
+        fn = this._handleNextFigure();
       }
       if (typeof fn === 'function') {
         fn();

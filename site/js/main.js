@@ -67,6 +67,7 @@ ReactDOM.render(
       displayQuantityOfSide={2}
       navigation
       enableHeading
+      infiniteScroll
       media={{
         '@media (max-width: 900px)': {
           width: '600px',

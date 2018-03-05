@@ -83,6 +83,10 @@
       background: black;
       color: white;
     }
+
+    &:focus {
+      outline: none;
+    }
   }
 }
 

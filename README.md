@@ -47,7 +47,21 @@ ReactDOM.render(
     clickable={true}
     active={0}
   >
-    <img src='image/path' alt='title or description' onClick={() => fn()} />
+    <div
+      onClick={() => fn()}
+      onKeyDown={() => fn()}
+      role="menuitem"
+      tabIndex="0"
+    >
+      <img
+        src='image/path'
+        alt='title or description'
+        style={{
+          display: 'block',
+          width: '100%',
+        }}
+      />
+    </div>
     <img src='image/path' alt='title or description' data-action="http://andyyou.github.io/react-coverflow/"/>
     <img src='image/path' alt='title or description' data-action="http://andyyou.github.io/react-coverflow/"/>
   </Coverflow>,
@@ -56,10 +70,13 @@ ReactDOM.render(
 );
 ```
 
+In order to pass functions to the images, you can simply wrap the `<img />` in a `<div>`. You should make sure to give your img specific styling properties to confine it to the parent div. 
+
 #### Properties
 | Name                 | Type      | Default           | Description                                  |
 |----------------------|-----------|-------------------|----------------------------------------------|
 | children             | node      |                   | should be `<img />` nodes                    |
+| infiniteScroll       | boolean   | false             | Allows the carousel to scroll from the last image to the (upon clicking the next button) or from the first to the last (by clicking the previous button). infiniteScroll is not supported by mouse scrolling. |
 | displayQuantityOfSide| number    |                   | The number of display image from center to the one side end.|
 | navigation           | boolean   | false             | Enable navigation buttons (prev, next).      |
 | enableHeading        | boolean   | true              | Shows the img alt as the label for the img.  |
@@ -146,6 +163,8 @@ $ npm publish
 ```
 
 ## Release History
+* 2018-03-04
+  - Added Infinite Scrolling Option that allows users to scroll from first to last option continuously using the arrow buttons. Buttons dynamically rendered based on current position of img
 * 2018-02-24
   - Fixed deprecation errors / warnings, updated packages.
 * 2016-09-29
@@ -200,7 +219,6 @@ Error: To use plugins requiring addCSS (e.g. keyframes, media queries), please w
 
 * Improve performance in Mobile(Touch events part)
 * Write test case
-* Allow for Loop Scrolling
 * Allow for mapping of children
 * Add further customization options
 * Add Prev/Next Arrows instead of Buttons
