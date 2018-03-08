@@ -325,8 +325,7 @@ class Coverflow extends Component {
   }
 
   _handleWheel(e) {
-
-    let delta = e.deltaY * (-120);
+    let delta = Math.abs(e.deltaY) === 125 ? e.deltaY * (-120) : e.deltaY < 0 ? -600000 : 600000;
     let count = Math.ceil(Math.abs(delta) / 120);
 
     if (count > 0) {
@@ -354,8 +353,8 @@ class Coverflow extends Component {
 
   _handleTouchMove(e) {
     e.preventDefault();
-    const {displayQuantityOfSide} = this.props;
-    const {width} = this.state;
+    const { displayQuantityOfSide } = this.props;
+    const { width } = this.state;
 
     let clientX = e.nativeEvent.touches[0].clientX;
     let lastX = TOUCH.lastX;
