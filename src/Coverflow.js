@@ -81,8 +81,12 @@ class Coverflow extends Component {
         this.refs[figureID].addEventListener(event, HandleAnimationState.bind(this));
       }
     });
-    window.addEventListener('resize', this.updateDimensions.bind(this));
-    document.addEventListener('keypress', this._keypress.bind(this), false);
+    const eventListener = window && document && window.addEventListener && document.addEventListener;
+    
+    if(eventListener) {
+      window.addEventListener('resize', this.updateDimensions.bind(this));
+      document.addEventListener('keypress', this._keypress.bind(this), false);
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -100,8 +104,13 @@ class Coverflow extends Component {
         this.refs[figureID].removeEventListener(event, HandleAnimationState.bind(this));
       }
     });
-    window.removeEventListener('resize', this.updateDimensions.bind(this));
-    document.removeEventListener('keypress', this._keypress.bind(this));
+
+    const removeListener = window && document && window.removeEventListener && document.removeEventListener;
+
+    if(removeListener) {
+      window.removeEventListener('resize', this.updateDimensions.bind(this));
+      document.removeEventListener('keypress', this._keypress.bind(this));
+    } 
   }
 
   updateDimensions(active) {

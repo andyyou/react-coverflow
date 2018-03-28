@@ -219,8 +219,6 @@ Error: To use plugins requiring addCSS (e.g. keyframes, media queries), please w
 
 ## Todo
 
-* Improve performance in Mobile(Touch events part)
 * Write test case
-* Allow for mapping of children
 * Add further customization options
 * Add Prev/Next Arrows instead of Buttons
