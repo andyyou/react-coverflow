@@ -100,7 +100,7 @@ class Container extends Component {
 
   _handleClick = () => {
     console.log('go');
-    const num = Math.floor((Math.random() * 10) + 1);
+    const num = Math.floor((Math.random() * 10));
     this.setState({
       active: num,
     });
