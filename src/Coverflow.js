@@ -81,12 +81,12 @@ class Coverflow extends Component {
         this.refs[figureID].addEventListener(event, HandleAnimationState.bind(this));
       }
     });
-    const eventListener = window && document && window.addEventListener && document.addEventListener;
     
-    if(eventListener) {
-      window.addEventListener('resize', this.updateDimensions.bind(this));
-      document.addEventListener('keypress', this._keypress.bind(this), false);
-    }
+    // const eventListener = window && window.addEventListener;
+    
+    // if(eventListener) {
+    //   window.addEventListener('resize', this.updateDimensions.bind(this));
+    // }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -105,12 +105,11 @@ class Coverflow extends Component {
       }
     });
 
-    const removeListener = window && document && window.removeEventListener && document.removeEventListener;
+    // const removeListener = window && window.removeEventListener;
 
-    if(removeListener) {
-      window.removeEventListener('resize', this.updateDimensions.bind(this));
-      document.removeEventListener('keypress', this._keypress.bind(this));
-    } 
+    // if(removeListener) {
+    //   window.removeEventListener('resize', this.updateDimensions.bind(this));
+    // } 
   }
 
   updateDimensions(active) {
@@ -148,6 +147,8 @@ class Coverflow extends Component {
         onWheel={enableScroll ? this._handleWheel.bind(this) : null}
         onTouchStart={this._handleTouchStart.bind(this)}
         onTouchMove={this._handleTouchMove.bind(this)}
+        onKeyDown={this._keyDown.bind(this)}
+        tabIndex="-1"
       >
         <div className={styles.coverflow}>
           <div className={styles.preloader}></div>
@@ -190,10 +191,10 @@ class Coverflow extends Component {
     return Math.floor(length / 2);
   }
 
-  _keypress(e) {
-    if (e.keyCode === 39) {
+  _keyDown(e) {
+    if (e.keyCode === 37) {
       this._handlePrevFigure();
-    } else if (e.keyCode === 37) {
+    } else if (e.keyCode === 39) {
       this._handleNextFigure();
     }
   }
