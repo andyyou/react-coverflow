@@ -105,11 +105,11 @@ class Coverflow extends Component {
       }
     });
 
-    const removeListener = window && window.removeEventListener;
+    // const removeListener = window && window.removeEventListener;
 
-    if(removeListener) {
-      window.removeEventListener('resize', this.updateDimensions.bind(this));
-    } 
+    // if(removeListener) {
+    //   window.removeEventListener('resize', this.updateDimensions.bind(this));
+    // } 
   }
 
   updateDimensions(active) {
