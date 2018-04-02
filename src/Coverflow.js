@@ -82,11 +82,11 @@ class Coverflow extends Component {
       }
     });
     
-    // const eventListener = window && window.addEventListener;
+    const eventListener = window && window.addEventListener;
     
-    // if(eventListener) {
-    //   window.addEventListener('resize', this.updateDimensions.bind(this));
-    // }
+    if(eventListener) {
+      window.addEventListener('resize', this.updateDimensions.bind(this));
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -105,11 +105,11 @@ class Coverflow extends Component {
       }
     });
 
-    // const removeListener = window && window.removeEventListener;
+    const removeListener = window && window.removeEventListener;
 
-    // if(removeListener) {
-    //   window.removeEventListener('resize', this.updateDimensions.bind(this));
-    // } 
+    if(removeListener) {
+      window.removeEventListener('resize', this.updateDimensions.bind(this));
+    } 
   }
 
   updateDimensions(active) {
@@ -136,14 +136,17 @@ class Coverflow extends Component {
   }
 
   render() {
-    const { enableScroll, navigation, infiniteScroll } = this.props;
+    const { enableScroll, navigation, infiniteScroll, media } = this.props;
     const { width, height, current } = this.state;
     let renderPrevBtn = infiniteScroll ? true : current > 0;
     let renderNextBtn = infiniteScroll ? true : current < this.props.children.length - 1;
     return (
       <div
         className={styles.container}
-        style={[{width: `${width}px`, height: `${height}px`}, this.props.media]}
+        style={
+          Object.keys(media).length !== 0 ? media : 
+          { width: `${width}px`, height: `${height}px` }
+        }
         onWheel={enableScroll ? this._handleWheel.bind(this) : null}
         onTouchStart={this._handleTouchStart.bind(this)}
         onTouchMove={this._handleTouchMove.bind(this)}
