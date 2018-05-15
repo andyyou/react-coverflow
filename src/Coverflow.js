@@ -144,7 +144,7 @@ class Coverflow extends Component {
       <div
         className={styles.container}
         style={
-          Object.keys(media).length !== 0 ? media :
+          Object.keys(media).length !== 0 ? media : 
           { width: `${width}px`, height: `${height}px` }
         }
         onWheel={enableScroll ? this._handleWheel.bind(this) : null}
