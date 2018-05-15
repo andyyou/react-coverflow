@@ -45,7 +45,7 @@ class Coverflow extends Component {
       height: this.props.height || 'auto',
     };
   }
-  
+
   static propTypes = {
     children: PropTypes.node.isRequired,
     displayQuantityOfSide: PropTypes.number.isRequired,
@@ -81,9 +81,9 @@ class Coverflow extends Component {
         this.refs[figureID].addEventListener(event, HandleAnimationState.bind(this));
       }
     });
-    
+
     const eventListener = window && window.addEventListener;
-    
+
     if(eventListener) {
       window.addEventListener('resize', this.updateDimensions.bind(this));
     }
@@ -109,7 +109,7 @@ class Coverflow extends Component {
 
     // if(removeListener) {
     //   window.removeEventListener('resize', this.updateDimensions.bind(this));
-    // } 
+    // }
   }
 
   updateDimensions(active) {
@@ -144,7 +144,7 @@ class Coverflow extends Component {
       <div
         className={styles.container}
         style={
-          Object.keys(media).length !== 0 ? media : 
+          Object.keys(media).length !== 0 ? media :
           { width: `${width}px`, height: `${height}px` }
         }
         onWheel={enableScroll ? this._handleWheel.bind(this) : null}
@@ -274,7 +274,7 @@ class Coverflow extends Component {
         <figure
           className={styles.figure}
           key={index}
-          onClick={() => this._handleFigureClick(index, figureElement.props['data-action']) }
+          onClick={(e) => this._handleFigureClick(index, figureElement.props['data-action'], e) }
           style={style}
           ref={`figure_${index}`}
         >
