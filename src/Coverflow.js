@@ -45,7 +45,7 @@ class Coverflow extends Component {
       height: this.props.height || 'auto',
     };
   }
-
+  
   static propTypes = {
     children: PropTypes.node.isRequired,
     displayQuantityOfSide: PropTypes.number.isRequired,
@@ -81,9 +81,9 @@ class Coverflow extends Component {
         this.refs[figureID].addEventListener(event, HandleAnimationState.bind(this));
       }
     });
-
+    
     const eventListener = window && window.addEventListener;
-
+    
     if(eventListener) {
       window.addEventListener('resize', this.updateDimensions.bind(this));
     }
@@ -109,7 +109,7 @@ class Coverflow extends Component {
 
     // if(removeListener) {
     //   window.removeEventListener('resize', this.updateDimensions.bind(this));
-    // }
+    // } 
   }
 
   updateDimensions(active) {
