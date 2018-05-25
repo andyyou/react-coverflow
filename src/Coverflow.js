@@ -274,7 +274,7 @@ class Coverflow extends Component {
         <figure
           className={styles.figure}
           key={index}
-          onClick={() => this._handleFigureClick(index, figureElement.props['data-action']) }
+          onClick={(e) => this._handleFigureClick(index, figureElement.props['data-action'], e) }
           style={style}
           ref={`figure_${index}`}
         >
