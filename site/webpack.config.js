@@ -1,12 +1,13 @@
-const path = require('path');
-const glob = require('glob');
-const webpack = require('webpack');
+const path = require("path");
+const glob = require("glob");
+const webpack = require("webpack");
 // const precss = require("precss");
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 
-const jsloader = process.env.NODE_ENV === 'react-hot'
-  ? ['react-hot-loader/babel', 'babel-loader?presets[]=react']
-  : 'babel-loader?presets[]=react';
+const jsloader =
+  process.env.NODE_ENV === "react-hot"
+    ? ["react-hot-loader/babel", "babel-loader?presets[]=react"]
+    : "babel-loader?presets[]=react";
 const plugins = [
   new webpack.optimize.ModuleConcatenationPlugin(),
   new webpack.LoaderOptionsPlugin({
@@ -19,24 +20,24 @@ const plugins = [
 const entry = {};
 const mainEntryPoints = glob.sync(
   // Ignore compile filename with `.bundle.js`
-  path.join(__dirname, './js/!(*.bundle).js'),
+  path.join(__dirname, "./js/!(*.bundle).js")
 );
 entry.main = mainEntryPoints;
 
 const config = {
-  mode: 'development',
+  mode: "development",
   context: __dirname,
   entry,
   output: {
     path: `${__dirname}/js`,
-    filename: '[name].bundle.js',
-    publicPath: 'js/',
+    filename: "[name].bundle.js",
+    publicPath: "js/",
   },
-  devtool: 'eval-source-map',
+  devtool: "eval-source-map",
   resolve: {
-    extensions: ['.js', '.jsx', '.json', '.scss', '.css'],
+    extensions: [".js", ".jsx", ".json", ".scss", ".css"],
     alias: {
-      radium: require.resolve('radium/index'),
+      radium: require.resolve("radium/index"),
     },
   },
   module: {
@@ -44,14 +45,14 @@ const config = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        // loader: "babel-loader",
+        loader: "babel-loader",
       },
       {
         test: /\.(css|scss)$/,
         loaders: [
-          'style-loader',
-          'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]__[hash:base64:5]',
-          'sass-loader',
+          "style-loader",
+          "css-loader?modules&importLoaders=1&localIdentName=[name]__[local]__[hash:base64:5]",
+          "sass-loader",
         ],
       },
       // {
