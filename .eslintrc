@@ -6,26 +6,26 @@
     "es6": true
   },
   "parser": "babel-eslint",
-  "parserOptions": { 
-    "ecmaVersion": 6, 
-    "ecmaFeatures": { 
-      "jsx": true, 
-      "arrowFunctions": true, 
-      "blockBindings": true, 
-      "classes": true, 
-      "defaultParams": true, 
-      "destructuring": true, 
-      "forOf": true, 
-      "generators": false, 
-      "modules": true, 
-      "objectLiteralComputedProperties": true, 
-      "objectLiteralDuplicateProperties": false, 
-      "objectLiteralShorthandMethods": true, 
-      "objectLiteralShorthandProperties": true, 
-      "spread": true, 
-      "superInFunctions": true, 
-      "templateStrings": true,
-    },
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "ecmaFeatures": {
+      "jsx": true,
+      "arrowFunctions": true,
+      "blockBindings": true,
+      "classes": true,
+      "defaultParams": true,
+      "destructuring": true,
+      "forOf": true,
+      "generators": false,
+      "modules": true,
+      "objectLiteralComputedProperties": true,
+      "objectLiteralDuplicateProperties": false,
+      "objectLiteralShorthandMethods": true,
+      "objectLiteralShorthandProperties": true,
+      "spread": true,
+      "superInFunctions": true,
+      "templateStrings": true
+    }
   },
   "rules": {
     /**
@@ -33,6 +33,7 @@
      *  http://www.cnblogs.com/qianlegeqian/p/4728170.html
      *  https://github.com/airbnb/javascript/blob/master/packages/eslint-config-airbnb/base/index.js
      */
+    "allowForLoopAfterthoughts": true,
     "no-underscore-dangle": 0,
     "no-console": "off",
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
@@ -46,10 +47,10 @@
     "no-nested-ternary": 2,
     "no-use-before-define": [2, "nofunc"],
     "space-after-keywords": "off",
-    "keyword-spacing": [2, {"before": true, "after": true}],
+    "keyword-spacing": [2, { "before": true, "after": true }],
     "space-before-blocks": [2, "always"], // 大括號前要有空白
     "space-in-parens": [2, "never"], // 小括號內(前後)不得有空白
     "space-unary-ops": 2,
-    "no-mixed-spaces-and-tabs": [2, false], // 禁止混用 space & tab
+    "no-mixed-spaces-and-tabs": [2, false] // 禁止混用 space & tab
   }
 }

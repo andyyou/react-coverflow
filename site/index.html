@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>React Coverflow</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 </head>
+
 <body>
   <nav class="navbar navbar-inverse">
     <div class="container">
       <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+          aria-controls="navbar">
           <span class="sr-only">Toggle navigation</span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
@@ -20,12 +23,19 @@
       </div>
       <div id="navbar" class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
-          <li class="active"><a href="#">Getting Started</a></li>
-          <li><a href="https://github.com/andyyou/react-coverflow">Github</a></li>
+          <li class="active">
+            <a href="#">Getting Started</a>
+          </li>
+          <li>
+            <a href="https://github.com/andyyou/react-coverflow">Github</a>
+          </li>
         </ul>
-      </div><!-- /.nav-collapse -->
-    </div><!-- /.container -->
-  </nav><!-- /.navbar -->
+      </div>
+      <!-- /.nav-collapse -->
+    </div>
+    <!-- /.container -->
+  </nav>
+  <!-- /.navbar -->
   <div class="container">
     <div class="row">
       <div class="col-sm-8 col-sm-offset-2">
@@ -33,9 +43,11 @@
           <h3>
             React Coverflow Component
             <p class="pull-right">
-              <a aria-label="Star andyyou/react-coverflow on GitHub" data-count-aria-label="# stargazers on GitHub" data-show-count="true" data-count-href="/andyyou/react-coverflow/stargazers" href="https://github.com/andyyou/react-coverflow" class="btn btn-xs navbar-btn github-button">Star</a>
+              <a aria-label="Star andyyou/react-coverflow on GitHub" data-count-aria-label="# stargazers on GitHub" data-show-count="true"
+                data-count-href="/andyyou/react-coverflow/stargazers" href="https://github.com/andyyou/react-coverflow" class="btn btn-xs navbar-btn github-button">Star</a>
 
-              <a aria-label="Fork andyyou/react-coverflow on GitHub" data-count-aria-label="# forks on GitHub" data-show-count="true" data-count-href="/andyyou/react-coverflow/network" href="https://github.com/andyyou/react-coverflow/fork" class="github-button">Fork</a>
+              <a aria-label="Fork andyyou/react-coverflow on GitHub" data-count-aria-label="# forks on GitHub" data-show-count="true" data-count-href="/andyyou/react-coverflow/network"
+                href="https://github.com/andyyou/react-coverflow/fork" class="github-button">Fork</a>
             </p>
           </h3>
           <p class="text-muted">
@@ -59,19 +71,21 @@
         </p>
         <h3>Getting started</h3>
         <p class="text-muted">
-          Install <strong>react-coverflow</strong> using npm.
+          Install
+          <strong>react-coverflow</strong> using npm.
         </p>
 
         <pre>npm install react-coverflow</pre>
 
         <p class="text-muted">
-        Then you can require it and use.
+          Then you can require it and use.
         </p>
 
         <script src="https://gist.github.com/Asalem1/b732568fde235a492f4e837055967d02.js"></script>
 
         <p class="text-muted">
-        For more information, please visit <a href="http://andyyou.github.io/react-coverflow/">Github</a>
+          For more information, please visit
+          <a href="http://andyyou.github.io/react-coverflow/">Github</a>
         </p>
       </div>
     </div>
@@ -81,10 +95,11 @@
         <h3>Responsive</h3>
 
         <div class="text-muted">
-          We don't support <a href="https://github.com/contra/react-responsive">react-responsive</a> anymore.
-          Now you can just use <span class='text-primary'>media</span> property to support responsive ability.
-
-          This example also highlights the function of the properties of navigation, enableHeading, and infiniteScroll properties.
+          <strong>Due to issues with Radium, we will be phasing out the dependency in upcoming versions</strong>
+          <br> We don't support
+          <a href="https://github.com/contra/react-responsive">react-responsive</a> anymore. Now you can just use
+          <span class='text-primary'>media</span> property to support responsive ability. This example also highlights the function of the properties
+          of navigation, enableHeading, and infiniteScroll properties.
 
           <div>
             <br />
@@ -148,14 +163,17 @@
   <script src="js/main.bundle.js"></script>
   <script async defer id="github-bjs" src="https://buttons.github.io/buttons.js"></script>
   <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+    (function (i, s, o, g, r, a, m) {
+      i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+        (i[r].q = i[r].q || []).push(arguments)
+      }, i[r].l = 1 * new Date(); a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'http://www.google-analytics.com/analytics.js', 'ga');
 
     ga('create', 'UA-39208536-3', 'auto');
     ga('send', 'pageview');
 
   </script>
 </body>
+
 </html>

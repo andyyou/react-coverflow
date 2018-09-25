@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { StyleRoot } from 'radium';
@@ -8,7 +9,6 @@ const fn = () => {
 };
 
 ReactDOM.render(
-
   <Coverflow
     width={960}
     height={480}
@@ -16,17 +16,8 @@ ReactDOM.render(
     navigation={false}
     enableHeading={false}
   >
-    <div
-      onClick={() => fn()}
-      onKeyDown={() => fn()}
-      role="menuitem"
-      tabIndex="0"
-    >
-      <img
-        src="images/album-1.png"
-        alt="Album one"
-        style={{ display: 'block', width: '100%' }}
-      />
+    <div onClick={() => fn()} onKeyDown={() => fn()} role="menuitem" tabIndex="0">
+      <img src="images/album-1.png" alt="Album one" style={{ display: 'block', width: '100%' }} />
     </div>
     <img src="images/album-2.png" alt="Album two" data-action="http://passer.cc" />
     <img src="images/album-3.png" alt="Album three" data-action="https://doce.cc/" />
@@ -55,7 +46,6 @@ ReactDOM.render(
     <img src="images/album-5.png" alt="Album five" data-action="http://www.bbc.co.uk" />
     <img src="images/album-6.png" alt="Album six" data-action="https://medium.com" />
     <img src="images/album-7.png" alt="Album seven" data-action="http://www.google.com" />
-
   </Coverflow>,
 
   document.querySelector('.example_1'),
@@ -69,23 +59,26 @@ ReactDOM.render(
       enableHeading
       infiniteScroll
       media={{
-        '@media (max-width: 900px)': {
-          width: '600px',
-          height: '300px',
-        },
-        '@media (min-width: 900px)': {
+        '@media screen and (min-width: 900px)': {
           width: '960px',
           height: '600px',
         },
+        '@media screen and (max-width: 900px)': {
+          width: '600px',
+          height: '300px',
+        },
       }}
     >
-      <img src="images/album-1.png" alt="Album one" data-action="https://facebook.github.io/react/" />
+      <img
+        src="images/album-1.png"
+        alt="Album one"
+        data-action="https://facebook.github.io/react/"
+      />
       <img src="images/album-2.png" alt="Album two" data-action="http://passer.cc" />
       <img src="images/album-3.png" alt="Album three" data-action="https://doce.cc/" />
       <img src="images/album-4.png" alt="Album four" data-action="http://tw.yahoo.com" />
     </Coverflow>
-  </StyleRoot>
-  ,
+  </StyleRoot>,
   document.querySelector('.example_2'),
 );
 
@@ -100,11 +93,11 @@ class Container extends Component {
 
   _handleClick = () => {
     console.log('go');
-    const num = Math.floor((Math.random() * 10));
+    const num = ~~(Math.random() * 10);
     this.setState({
       active: num,
     });
-  }
+  };
 
   render() {
     return (
@@ -133,12 +126,7 @@ class Container extends Component {
           enableHeading={false}
           active={this.state.active}
         >
-          <div
-            onClick={() => fn()}
-            onKeyDown={() => fn()}
-            role="menuitem"
-            tabIndex="0"
-          >
+          <div onClick={() => fn()} onKeyDown={() => fn()} role="menuitem" tabIndex="0">
             <img
               src="images/album-1.png"
               alt="Album one"
@@ -151,7 +139,11 @@ class Container extends Component {
           <img src="images/album-5.png" alt="Album five" data-action="http://www.bbc.co.uk" />
           <img src="images/album-6.png" alt="Album six" data-action="https://medium.com" />
           <img src="images/album-7.png" alt="Album seven" data-action="http://www.google.com" />
-          <img src="images/album-1.png" alt="Album one" data-action="https://facebook.github.io/react/" />
+          <img
+            src="images/album-1.png"
+            alt="Album one"
+            data-action="https://facebook.github.io/react/"
+          />
           <img src="images/album-2.png" alt="Album two" data-action="http://passer.cc" />
           <img src="images/album-3.png" alt="Album three" data-action="https://doce.cc/" />
           <img src="images/album-4.png" alt="Album four" data-action="http://tw.yahoo.com" />
@@ -161,7 +153,4 @@ class Container extends Component {
   }
 }
 
-ReactDOM.render(
-  <Container />,
-  document.querySelector('.example_4'),
-);
+ReactDOM.render(<Container />, document.querySelector('.example_4'));
