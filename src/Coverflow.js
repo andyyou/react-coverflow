@@ -54,7 +54,7 @@ class Coverflow extends Component {
     translateY: PropTypes.string,
     rotateYLeft: PropTypes.string,
     rotateYRight: PropTypes.string,
-    scale: PropTypes.string
+    windowFromProps: PropTypes.any
   };
 
   static defaultProps = {
@@ -74,7 +74,7 @@ class Coverflow extends Component {
     translateY: '0px',
     rotateYLeft: '0deg',
     rotateYRight: '-0deg',
-    scale: ''
+    windowFromProps: {}
   };
 
   state = {
@@ -83,6 +83,18 @@ class Coverflow extends Component {
     width: this.props.width,
     height: this.props.height
   };
+
+  initResize() {
+    const windowFromProps = window || this.props.windowFromProps;
+    const eventListener = windowFromProps && windowFromProps.addEventListener;
+
+    if (eventListener) {
+      windowFromProps.addEventListener(
+        'resize',
+        this.updateDimensions.bind(this)
+      );
+    }
+  }
 
   componentDidMount() {
     this.updateDimensions();
@@ -98,11 +110,7 @@ class Coverflow extends Component {
       }
     });
 
-    const eventListener = window && window.addEventListener;
-
-    if (eventListener) {
-      window.addEventListener('resize', this.updateDimensions.bind(this));
-    }
+    this.initResize();
   }
 
   componentWillReceiveProps(nextProps) {
