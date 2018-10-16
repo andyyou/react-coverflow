@@ -53,8 +53,7 @@ class Coverflow extends Component {
     translateXRightOffset: PropTypes.number,
     translateY: PropTypes.string,
     rotateYLeft: PropTypes.string,
-    rotateYRight: PropTypes.string,
-    windowFromProps: PropTypes.any
+    rotateYRight: PropTypes.string
   };
 
   static defaultProps = {
@@ -73,8 +72,7 @@ class Coverflow extends Component {
     translateXRightOffset: 0,
     translateY: '0px',
     rotateYLeft: '0deg',
-    rotateYRight: '-0deg',
-    windowFromProps: {}
+    rotateYRight: '-0deg'
   };
 
   state = {
@@ -83,18 +81,6 @@ class Coverflow extends Component {
     width: this.props.width,
     height: this.props.height
   };
-
-  initResize() {
-    const windowFromProps = window || this.props.windowFromProps;
-    const eventListener = windowFromProps && windowFromProps.addEventListener;
-
-    if (eventListener) {
-      windowFromProps.addEventListener(
-        'resize',
-        this.updateDimensions.bind(this)
-      );
-    }
-  }
 
   componentDidMount() {
     this.updateDimensions();
@@ -110,7 +96,11 @@ class Coverflow extends Component {
       }
     });
 
-    // this.initResize();
+    const eventListener = window && window.addEventListener;
+
+    if (eventListener) {
+      window.addEventListener('resize', this.updateDimensions.bind(this));
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -294,7 +284,7 @@ class Coverflow extends Component {
       // If on the active figure
       if (typeof action === 'string') {
         // If action is a URL (string), follow the link
-        // window.open(action, '_blank');
+        window.open(action, '_blank');
       }
 
       this._removePointerEvents();
