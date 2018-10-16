@@ -15,7 +15,7 @@ const TOUCH = {
   move: false,
   lastX: 0,
   sign: 0,
-  lastMove: 0,
+  lastMove: 0
 };
 
 const TRANSITIONS = [
@@ -23,7 +23,7 @@ const TRANSITIONS = [
   'oTransitionEnd',
   'otransitionend',
   'MSTransitionEnd',
-  'webkitTransitionEnd',
+  'webkitTransitionEnd'
 ];
 
 const HandleAnimationState = function() {
@@ -49,6 +49,11 @@ class Coverflow extends Component {
     infiniteScroll: PropTypes.bool,
     width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    translateXLeftOffset: PropTypes.number,
+    translateXRightOffset: PropTypes.number,
+    translateY: PropTypes.string,
+    rotateYLeft: PropTypes.string,
+    rotateYRight: PropTypes.string
   };
 
   static defaultProps = {
@@ -63,13 +68,18 @@ class Coverflow extends Component {
     infiniteScroll: false,
     width: 'auto',
     height: 'auto',
+    translateXLeftOffset: 0,
+    translateXRightOffset: 0,
+    translateY: '0px',
+    rotateYLeft: '0deg',
+    rotateYRight: '-0deg'
   };
 
   state = {
     current: ~~(React.Children.count(this.props.children) / 2),
     move: 0,
     width: this.props.width,
-    height: this.props.height,
+    height: this.props.height
   };
 
   componentDidMount() {
@@ -79,7 +89,10 @@ class Coverflow extends Component {
     TRANSITIONS.forEach(event => {
       for (let i = 0; i < length; i++) {
         const figureID = `figure_${i}`;
-        this.refs[figureID].addEventListener(event, HandleAnimationState.bind(this));
+        this.refs[figureID].addEventListener(
+          event,
+          HandleAnimationState.bind(this)
+        );
       }
     });
 
@@ -102,7 +115,10 @@ class Coverflow extends Component {
     TRANSITIONS.forEach(event => {
       for (let i = 0; i < length; i++) {
         const figureID = `figure_${i}`;
-        this.refs[figureID].removeEventListener(event, HandleAnimationState.bind(this));
+        this.refs[figureID].removeEventListener(
+          event,
+          HandleAnimationState.bind(this)
+        );
       }
     });
 
@@ -119,7 +135,7 @@ class Coverflow extends Component {
     const center = this._center();
     let state = {
       width: ReactDOM.findDOMNode(this).offsetWidth,
-      height: ReactDOM.findDOMNode(this).offsetHeight,
+      height: ReactDOM.findDOMNode(this).offsetHeight
     };
     const baseWidth = state.width / (displayQuantityOfSide * 2 + 1);
     let activeImg = typeof active === 'number' ? active : this.props.active;
@@ -130,7 +146,7 @@ class Coverflow extends Component {
 
       state = Object.assign({}, state, {
         current: active,
-        move,
+        move
       });
     }
     this.setState(state);
@@ -140,20 +156,24 @@ class Coverflow extends Component {
     const { enableScroll, navigation, infiniteScroll, media } = this.props;
     const { width, height, current } = this.state;
     const renderPrevBtn = infiniteScroll ? true : current > 0;
-    const renderNextBtn = infiniteScroll ? true : current < this.props.children.length - 1;
+    const renderNextBtn = infiniteScroll
+      ? true
+      : current < this.props.children.length - 1;
+
     return (
       <StyleRoot>
         <div
           className={styles.container}
           style={
-            Object.keys(media).length !== 0 ? media : { width: `${width}px`, height: `${height}px` }
+            Object.keys(media).length !== 0
+              ? media
+              : { width: `${width}px`, height: `${height}px` }
           }
           onWheel={enableScroll ? this._handleWheel.bind(this) : null}
           onTouchStart={this._handleTouchStart.bind(this)}
           onTouchMove={this._handleTouchMove.bind(this)}
           onKeyDown={this._keyDown.bind(this)}
-          tabIndex="-1"
-        >
+          tabIndex="-1">
           <div className={styles.coverflow}>
             <div className={styles.preloader} />
             <div className={styles.stage} ref="stage">
@@ -165,8 +185,7 @@ class Coverflow extends Component {
                   <button
                     type="button"
                     className={styles.button}
-                    onClick={() => this._handlePrevFigure()}
-                  >
+                    onClick={() => this._handlePrevFigure()}>
                     Previous
                   </button>
                 )}
@@ -174,8 +193,7 @@ class Coverflow extends Component {
                   <button
                     type="button"
                     className={styles.button}
-                    onClick={() => this._handleNextFigure()}
-                  >
+                    onClick={() => this._handleNextFigure()}>
                     Next
                   </button>
                 )}
@@ -204,6 +222,7 @@ class Coverflow extends Component {
   }
 
   _handleFigureStyle(index, current) {
+    let activeClass = false;
     const { displayQuantityOfSide } = this.props;
     const { width } = this.state;
     const style = {};
@@ -218,16 +237,22 @@ class Coverflow extends Component {
     opacity = current === index ? 1 : opacity;
     // Handle translateX
     if (index === current) {
+      activeClass = true;
       style.width = `${baseWidth}px`;
-      style.transform = `translateX(${this.state.move + offset}px)  scale(${
+      style.transform = `translateX(${this.state.move + offset}px) scale(${
         this.props.currentFigureScale
       }`;
-      style.zIndex = `${10 - depth}`;
+      style.zIndex = `${10}`;
+      // style.zIndex = `${10 - depth}`;
       style.opacity = opacity;
     } else if (index < current) {
       // Left side
       style.width = `${baseWidth}px`;
-      style.transform = `translateX(${this.state.move + offset}px) rotateY(40deg) scale(${
+      style.transform = `translateX(${this.state.move +
+        offset +
+        this.props.translateXLeftOffset}px) translateY(${
+        this.props.translateY
+      }) rotateY(${this.props.rotateYLeft}) scale(${
         this.props.otherFigureScale
       }`;
       style.zIndex = `${10 - depth}`;
@@ -235,13 +260,17 @@ class Coverflow extends Component {
     } else if (index > current) {
       // Right side
       style.width = `${baseWidth}px`;
-      style.transform = ` translateX(${this.state.move + offset}px) rotateY(-40deg) scale(${
+      style.transform = ` translateX(${this.state.move +
+        offset +
+        this.props.translateXRightOffset}px) translateY(${
+        this.props.translateY
+      }) rotateY(${this.props.rotateYRight}) scale(${
         this.props.otherFigureScale
       })`;
       style.zIndex = `${10 - depth}`;
       style.opacity = opacity;
     }
-    return style;
+    return { activeClass, style };
   }
 
   _handleFigureClick = (index, action, e) => {
@@ -274,24 +303,36 @@ class Coverflow extends Component {
   _renderFigureNodes = () => {
     const { enableHeading } = this.props;
     const { current } = this.state;
-    const figureNodes = React.Children.map(this.props.children, (child, index) => {
-      const figureElement = React.cloneElement(child, {
-        className: styles.cover,
-      });
-      const style = this._handleFigureStyle(index, current);
-      return (
-        <figure
-          className={styles.figure}
-          key={index}
-          onClick={e => this._handleFigureClick(index, figureElement.props['data-action'], e)}
-          style={style}
-          ref={`figure_${index}`}
-        >
-          {figureElement}
-          {enableHeading && <div className={styles.text}>{figureElement.props.alt}</div>}
-        </figure>
-      );
-    });
+    const figureNodes = React.Children.map(
+      this.props.children,
+      (child, index) => {
+        const figureElement = React.cloneElement(child, {
+          className: styles.cover
+        });
+        const style = this._handleFigureStyle(index, current).style;
+        const activeClass = this._handleFigureStyle(index, current).activeClass;
+
+        return (
+          <div
+            className={`${styles.figure} ${activeClass ? 'active' : ''}`}
+            key={index}
+            onClick={e =>
+              this._handleFigureClick(
+                index,
+                figureElement.props['data-action'],
+                e
+              )
+            }
+            style={style}
+            ref={`figure_${index}`}>
+            {figureElement}
+            {enableHeading && (
+              <div className={styles.text}>{figureElement.props.alt}</div>
+            )}
+          </div>
+        );
+      }
+    );
     return figureNodes;
   };
 
@@ -309,7 +350,8 @@ class Coverflow extends Component {
     const { current } = this.state;
     const baseWidth = width / (displayQuantityOfSide * 2 + 1);
     const distance =
-      this._center() - (current - 1 < 0 ? this.props.children.length - 1 : current - 1);
+      this._center() -
+      (current - 1 < 0 ? this.props.children.length - 1 : current - 1);
     const move = distance * baseWidth;
 
     if (current - 1 >= 0) {
@@ -327,7 +369,9 @@ class Coverflow extends Component {
     const { width } = this.state;
     const { current } = this.state;
     const baseWidth = width / (displayQuantityOfSide * 2 + 1);
-    const distance = this._center() - (current + 1 >= this.props.children.length ? 0 : current + 1);
+    const distance =
+      this._center() -
+      (current + 1 >= this.props.children.length ? 0 : current + 1);
     const move = distance * baseWidth;
 
     if (current + 1 < this.props.children.length) {
@@ -341,7 +385,12 @@ class Coverflow extends Component {
   };
 
   _handleWheel(e) {
-    const delta = Math.abs(e.deltaY) === 125 ? e.deltaY * -120 : e.deltaY < 0 ? -600000 : 600000;
+    const delta =
+      Math.abs(e.deltaY) === 125
+        ? e.deltaY * -120
+        : e.deltaY < 0
+          ? -600000
+          : 600000;
     const count = Math.ceil(Math.abs(delta) / 120);
 
     if (count > 0) {
