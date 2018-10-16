@@ -53,7 +53,8 @@ class Coverflow extends Component {
     translateXRightOffset: PropTypes.number,
     translateY: PropTypes.string,
     rotateYLeft: PropTypes.string,
-    rotateYRight: PropTypes.string
+    rotateYRight: PropTypes.string,
+    figureWidthPercent: PropTypes.number
   };
 
   static defaultProps = {
@@ -72,7 +73,8 @@ class Coverflow extends Component {
     translateXRightOffset: 0,
     translateY: '0px',
     rotateYLeft: '0deg',
-    rotateYRight: '-0deg'
+    rotateYRight: '-0deg',
+    figureWidthPercent: 100
   };
 
   state = {
@@ -226,7 +228,9 @@ class Coverflow extends Component {
     const { displayQuantityOfSide } = this.props;
     const { width } = this.state;
     const style = {};
-    const baseWidth = width / (displayQuantityOfSide * 2 + 1);
+    const baseWidth =
+      (width / (displayQuantityOfSide * 2 + 1) / 100) *
+      this.props.figureWidthPercent;
     const length = React.Children.count(this.props.children);
     const offset = length % 2 === 0 ? -width / 10 : 0;
     // Handle opacity
