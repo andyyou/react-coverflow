@@ -46,6 +46,7 @@ class Coverflow extends Component {
     otherFigureScale: PropTypes.number,
     active: PropTypes.number,
     media: PropTypes.any,
+    itemMedia: PropTypes.any,
     infiniteScroll: PropTypes.bool,
     width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
@@ -68,6 +69,7 @@ class Coverflow extends Component {
     otherFigureScale: 0.8,
     active: 0,
     media: {},
+    itemMedia: {},
     infiniteScroll: false,
     width: 'auto',
     height: 'auto',
@@ -308,7 +310,7 @@ class Coverflow extends Component {
   };
 
   _renderFigureNodes = () => {
-    const { enableHeading } = this.props;
+    const { enableHeading, itemMedia } = this.props;
     const { current } = this.state;
     const figureNodes = React.Children.map(
       this.props.children,
@@ -316,8 +318,14 @@ class Coverflow extends Component {
         const figureElement = React.cloneElement(child, {
           className: styles.cover
         });
-        const style = this._handleFigureStyle(index, current).style;
+        let style = this._handleFigureStyle(index, current).style;
+        if (Object.keys(itemMedia).length) {
+          Object.keys(itemMedia).forEach(
+            key => (style = { ...style, [key]: itemMedia[key] })
+          );
+        }
         const activeClass = this._handleFigureStyle(index, current).activeClass;
+
         return (
           <div
             className={`${styles.figure} ${activeClass ? 'active' : ''}`}
