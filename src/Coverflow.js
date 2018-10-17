@@ -78,7 +78,7 @@ class Coverflow extends Component {
     translateY: '0px',
     rotateYLeft: '0deg',
     rotateYRight: '-0deg',
-    figureWidthPercent: 100,
+    figureWidthPercent: 0,
     figureWidthPercentLeft: 0,
     figureWidthPercentRight: 0
   };
@@ -231,7 +231,12 @@ class Coverflow extends Component {
 
   _handleFigureStyle(index, current) {
     let activeClass = false;
-    const { displayQuantityOfSide } = this.props;
+    const {
+      displayQuantityOfSide,
+      figureWidthPercent,
+      translateXLeftOffset,
+      translateXRightOffset
+    } = this.props;
     const { width } = this.state;
     const style = {};
     const baseWidth = width / (displayQuantityOfSide * 2 + 1);
@@ -246,8 +251,7 @@ class Coverflow extends Component {
     // Handle translateX
     if (index === current) {
       activeClass = true;
-      style.width = `${baseWidth +
-        baseWidth * this.props.figureWidthPercent}px`;
+      style.width = `${baseWidth + baseWidth * figureWidthPercent}px`;
       style.transform = `translateX(${this.state.move + offset}px) scale(${
         this.props.currentFigureScale
       }`;
@@ -257,9 +261,12 @@ class Coverflow extends Component {
     } else if (index < current) {
       // Left side
       style.width = `${baseWidth}px`;
-      style.transform = `translateX(${this.state.move +
-        offset +
-        this.props.translateXLeftOffset}px) translateY(${
+      let translateX = this.state.move + offset;
+
+      if (index !== current - 1)
+        translateX = translateX + translateX * translateXLeftOffset;
+
+      style.transform = `translateX(${translateX}px) translateY(${
         this.props.translateY
       }) rotateY(${this.props.rotateYLeft}) scale(${
         this.props.otherFigureScale
@@ -269,13 +276,17 @@ class Coverflow extends Component {
     } else if (index > current) {
       // Right side
       style.width = `${baseWidth}px`;
-      style.transform = ` translateX(${this.state.move +
-        offset +
-        this.props.translateXRightOffset}px) translateY(${
+      let translateX = this.state.move + offset;
+
+      if (index !== current + 1)
+        translateX = translateX + translateX * translateXRightOffset;
+
+      style.transform = ` translateX(${translateX}px) translateY(${
         this.props.translateY
       }) rotateY(${this.props.rotateYRight}) scale(${
         this.props.otherFigureScale
       })`;
+
       style.zIndex = `${10 - depth}`;
       // style.opacity = opacity;
     }
