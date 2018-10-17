@@ -244,8 +244,7 @@ class Coverflow extends Component {
     // Handle translateX
     if (index === current) {
       activeClass = true;
-      style.width = `${baseWidth +
-        baseWidth * this.props.figureWidthPercent}px`;
+      style.width = `${baseWidth}px`;
       style.transform = `translateX(${this.state.move + offset}px) scale(${
         this.props.currentFigureScale
       }`;
@@ -254,8 +253,7 @@ class Coverflow extends Component {
       style.opacity = opacity;
     } else if (index < current) {
       // Left side
-      style.width = `${baseWidth +
-        baseWidth * this.props.figureWidthPercentLeft}px`;
+      style.width = `${baseWidth}px`;
       style.transform = `translateX(${this.state.move +
         offset +
         this.props.translateXLeftOffset}px) translateY(${
@@ -267,8 +265,7 @@ class Coverflow extends Component {
       style.opacity = opacity;
     } else if (index > current) {
       // Right side
-      style.width = `${baseWidth +
-        baseWidth * this.props.figureWidthPercentRight}px`;
+      style.width = `${baseWidth}px`;
       style.transform = ` translateX(${this.state.move +
         offset +
         this.props.translateXRightOffset}px) translateY(${
@@ -320,9 +317,8 @@ class Coverflow extends Component {
         });
         const style = this._handleFigureStyle(index, current).style;
         const activeClass = this._handleFigureStyle(index, current).activeClass;
-
         return (
-          <div
+          <figure
             className={`${styles.figure} ${activeClass ? 'active' : ''}`}
             key={index}
             onClick={e =>
@@ -338,7 +334,7 @@ class Coverflow extends Component {
             {enableHeading && (
               <div className={styles.text}>{figureElement.props.alt}</div>
             )}
-          </div>
+          </figure>
         );
       }
     );
