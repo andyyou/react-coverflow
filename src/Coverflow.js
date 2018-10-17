@@ -54,7 +54,9 @@ class Coverflow extends Component {
     translateY: PropTypes.string,
     rotateYLeft: PropTypes.string,
     rotateYRight: PropTypes.string,
-    figureWidthPercent: PropTypes.number
+    figureWidthPercent: PropTypes.number,
+    figureWidthPercentLeft: PropTypes.number,
+    figureWidthPercentRight: PropTypes.number
   };
 
   static defaultProps = {
@@ -74,7 +76,9 @@ class Coverflow extends Component {
     translateY: '0px',
     rotateYLeft: '0deg',
     rotateYRight: '-0deg',
-    figureWidthPercent: 100
+    figureWidthPercent: 100,
+    figureWidthPercentLeft: 0,
+    figureWidthPercentRight: 0
   };
 
   state = {
@@ -250,7 +254,8 @@ class Coverflow extends Component {
       style.opacity = opacity;
     } else if (index < current) {
       // Left side
-      style.width = `${baseWidth}px`;
+      style.width = `${baseWidth +
+        baseWidth * this.props.figureWidthPercentLeft}px`;
       style.transform = `translateX(${this.state.move +
         offset +
         this.props.translateXLeftOffset}px) translateY(${
@@ -262,7 +267,8 @@ class Coverflow extends Component {
       style.opacity = opacity;
     } else if (index > current) {
       // Right side
-      style.width = `${baseWidth}px`;
+      style.width = `${baseWidth +
+        baseWidth * this.props.figureWidthPercentRight}px`;
       style.transform = ` translateX(${this.state.move +
         offset +
         this.props.translateXRightOffset}px) translateY(${
