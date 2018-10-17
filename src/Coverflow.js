@@ -228,9 +228,7 @@ class Coverflow extends Component {
     const { displayQuantityOfSide } = this.props;
     const { width } = this.state;
     const style = {};
-    const baseWidth =
-      (width / (displayQuantityOfSide * 2 + 1) / 100) *
-      this.props.figureWidthPercent;
+    const baseWidth = width / (displayQuantityOfSide * 2 + 1);
     const length = React.Children.count(this.props.children);
     const offset = length % 2 === 0 ? -width / 10 : 0;
     // Handle opacity
@@ -242,7 +240,8 @@ class Coverflow extends Component {
     // Handle translateX
     if (index === current) {
       activeClass = true;
-      style.width = `${baseWidth}px`;
+      style.width = `${baseWidth +
+        baseWidth * this.props.figureWidthPercent}px`;
       style.transform = `translateX(${this.state.move + offset}px) scale(${
         this.props.currentFigureScale
       }`;
