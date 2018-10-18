@@ -359,8 +359,6 @@ class Coverflow extends Component {
           className = 'next';
         }
 
-        console.log('className: ', className);
-
         return (
           <figure
             className={`${styles.figure} ${className}`}
