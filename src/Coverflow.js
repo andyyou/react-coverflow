@@ -231,12 +231,16 @@ class Coverflow extends Component {
 
   _handleFigureStyle(index, current) {
     let activeClass = false;
+    let prevClass = false;
+    let nextClass = false;
+
     const {
       displayQuantityOfSide,
       figureWidthPercent,
       translateXLeftOffset,
       translateXRightOffset
     } = this.props;
+
     const { width } = this.state;
     const style = {};
     const baseWidth = width / (displayQuantityOfSide * 2 + 1);
@@ -244,15 +248,16 @@ class Coverflow extends Component {
     const offset = length % 2 === 0 ? -width / 10 : 0;
     // Handle opacity
     const depth = displayQuantityOfSide - Math.abs(current - index);
+
     let opacity = depth === 1 ? 0.95 : 0.5;
     opacity = depth === 2 ? 0.92 : opacity;
     opacity = depth === 3 ? 0.9 : opacity;
     opacity = current === index ? 1 : opacity;
+
     // Handle translateX
     if (index === current) {
       activeClass = true;
-      console.log('width: ', width, baseWidth, (baseWidth / width) * 100);
-      style.width = `${20}%`;
+      style.width = `${(baseWidth / width) * 100}%`;
       style.transform = `translateX(${this.state.move + offset}px) scale(${
         this.props.currentFigureScale
       }`;
@@ -261,11 +266,11 @@ class Coverflow extends Component {
       style.opacity = opacity;
     } else if (index < current) {
       // Left side
-      style.width = `${20}%`;
+      style.width = `${(baseWidth / width) * 100}%`;
       let translateX = this.state.move + offset;
 
       if (index === current - 1) {
-        console.log('LEFT: ', translateX);
+        prevClass = true;
         translateX = translateX + translateX * translateXLeftOffset;
       }
 
@@ -278,11 +283,11 @@ class Coverflow extends Component {
       // style.opacity = opacity;
     } else if (index > current) {
       // Right side
-      style.width = `${20}%`;
+      style.width = `${(baseWidth / width) * 100}%`;
       let translateX = this.state.move + offset;
 
       if (index === current + 1) {
-        console.log('RIGHT', translateX);
+        nextClass = true;
         translateX = translateX + translateX * translateXRightOffset;
       }
 
@@ -295,7 +300,7 @@ class Coverflow extends Component {
       style.zIndex = `${10 - depth}`;
       // style.opacity = opacity;
     }
-    return { activeClass, style };
+    return { activeClass, prevClass, nextClass, style };
   }
 
   _handleFigureClick = (index, action, e) => {
@@ -342,10 +347,23 @@ class Coverflow extends Component {
           );
         }
         const activeClass = this._handleFigureStyle(index, current).activeClass;
+        const prevClass = this._handleFigureStyle(index, current).prevClass;
+        const nextClass = this._handleFigureStyle(index, current).nextClass;
+
+        let className = '';
+        if (activeClass) {
+          className = 'active';
+        } else if (prevClass) {
+          className = 'prev';
+        } else if (nextClass) {
+          className = 'next';
+        }
+
+        console.log('className: ', className);
 
         return (
           <figure
-            className={`${styles.figure} ${activeClass ? 'active' : ''}`}
+            className={`${styles.figure} ${className}`}
             key={index}
             onClick={e =>
               this._handleFigureClick(
