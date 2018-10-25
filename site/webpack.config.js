@@ -5,7 +5,7 @@ const webpack = require('webpack');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 const jsloader = process.env.NODE_ENV === 'react-hot'
-  ? ['react-hot-loader/babel', 'babel-loader?presets[]=react']
+  ? ['babel-loader?presets[]=react']
   : 'babel-loader?presets[]=react';
 const plugins = [
   new webpack.optimize.ModuleConcatenationPlugin(),

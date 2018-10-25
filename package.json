@@ -38,8 +38,10 @@
   "license": "MIT",
   "dependencies": {
     "babel-runtime": "^6.26.0",
+    "radium": "^0.25.0"
+  },
+  "peerDependencies": {
     "prop-types": "^15.6.2",
-    "radium": "^0.25.0",
     "react": "^16.5.2",
     "react-dom": "^16.5.2"
   },
@@ -72,6 +74,9 @@
     "postcss-load-config": "^2.0.0",
     "postcss-loader": "^3.0.0",
     "precss": "^3.1.2",
+    "prop-types": "^15.6.2",
+    "react": "^16.5.2",
+    "react-dom": "^16.5.2",
     "react-hot-loader": "^4.3.11",
     "sass-loader": "^7.0.3",
     "style-loader": "^0.23.0",
