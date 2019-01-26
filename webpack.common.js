@@ -3,32 +3,25 @@ const glob = require('glob');
 const webpack = require('webpack');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
-const plugins = [
-  new webpack.LoaderOptionsPlugin({
-    debug: true,
-    test: /\.js$/,
-    options: {
-      eslint: {
-        configFile: path.resolve(__dirname, '.eslintrc'),
-        cache: false,
-      },
-    },
-  }),
-  new webpack.DefinePlugin({
-    'process.env': {
-      NODE_ENV: JSON.stringify('production'),
-    },
-  }),
-];
-
 const entry = {};
 const mainEntryPoints = glob.sync(path.join(__dirname, './src/*.js'));
 
 entry['react-coverflow'] = mainEntryPoints;
 
 module.exports = {
-  mode: 'production',
   entry,
+  plugins: [
+    new webpack.LoaderOptionsPlugin({
+      debug: true,
+      test: /\.js$/,
+      options: {
+        eslint: {
+          configFile: path.resolve(__dirname, '.eslintrc'),
+          cache: false,
+        },
+      },
+    }),
+  ],
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name].js',
@@ -53,17 +46,7 @@ module.exports = {
       },
     },
   ],
-  devtool: 'eval-source-map',
-  resolve: {
-    extensions: ['.js', '.jsx', '.json', '.scss', '.css'],
-    alias: {
-      radium: require.resolve('radium/index'),
-    },
-  },
   optimization: {
-    nodeEnv: 'production',
-    minimize: true,
-    concatenateModules: true,
     minimizer: [
       new UglifyJsPlugin({
         cache: true,
@@ -91,6 +74,12 @@ module.exports = {
       },
     },
   },
+  resolve: {
+    extensions: ['.js', '.jsx', '.json', '.scss', '.css'],
+    alias: {
+      radium: require.resolve('radium/index'),
+    },
+  },
   module: {
     rules: [
       {
@@ -113,5 +102,4 @@ module.exports = {
       },
     ],
   },
-  plugins,
 };
