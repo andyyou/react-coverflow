@@ -249,7 +249,6 @@ class Coverflow extends Component {
       return;
     }
 
-    this.refs.stage.style.pointerEvents = 'none';
     if (this.state.current === index) {
       // If on the active figure
       if (typeof action === 'string') {
