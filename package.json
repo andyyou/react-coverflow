@@ -1,17 +1,17 @@
 {
   "name": "react-coverflow",
-  "version": "0.2.16",
+  "version": "0.2.18",
   "description": "Carousel of coverflow effect",
   "main": "main.js",
   "scripts": {
     "test": "make test",
     "prepublishOnly": "rm -rf dist && webpack --progress --colors -d",
     "clean": "rm -rf dist && rm -rf site/js/*.bundle.js",
-    "build-npm": "rm -rf dist && webpack --progress --colors -d",
+    "build-npm": "rm -rf dist && webpack --progress --colors -d --config webpack.prod.js",
     "build:watch": "webpack --progress --colors --watch",
     "lint": "eslint ./src/Coverflow.js eslint ./site/js/main.js",
-    "build-site": "rm -rf site/js/*.bundle.js && webpack --config site/webpack.config.js",
-    "dev": "rm -rf site/js/*.bundle.js && NODE_ENV=react-hot webpack-dev-server --config site/webpack.config.js --progress --colors --inline --hot --port 3000 --host 0.0.0.0 --content-base site"
+    "build-site": "rm -rf site/js/*.bundle.js && NODE_ENV=production webpack --config site/webpack.prod.js",
+    "dev": "rm -rf site/js/*.bundle.js && NODE_ENV=react-hot webpack-dev-server --config site/webpack.dev.js --progress --colors --inline --hot --port 3000 --host 0.0.0.0 --content-base site"
   },
   "postcss": {
     "parser": "sugarss",
@@ -37,9 +37,10 @@
   },
   "license": "MIT",
   "dependencies": {
-    "babel-runtime": "^6.26.0",
+    "radium": "^0.25.1"
+  },
+  "peerDependencies": {
     "prop-types": "^15.6.2",
-    "radium": "^0.25.0",
     "react": "^16.5.2",
     "react-dom": "^16.5.2"
   },
@@ -55,7 +56,9 @@
     "babel-preset-es2015": "^6.14.0",
     "babel-preset-react": "^6.11.1",
     "babel-preset-stage-0": "^6.5.0",
+    "babel-runtime": "^6.26.0",
     "chai": "^4.1.2",
+    "clean-webpack-plugin": "^1.0.1",
     "css-loader": "^1.0.0",
     "eslint": "^5.6.0",
     "eslint-config-airbnb": "^17.1.0",
@@ -66,18 +69,21 @@
     "extract-text-webpack-plugin": "^3.0.2",
     "file-loader": "^2.0.0",
     "glob": "^7.1.3",
+    "html-webpack-plugin": "^3.2.0",
     "mocha": "^5.2.0",
     "node-sass": "^4.9.3",
-    "open-browser-webpack-plugin": "0.0.5",
     "postcss-load-config": "^2.0.0",
     "postcss-loader": "^3.0.0",
-    "precss": "^3.1.2",
+    "prop-types": "^15.6.2",
+    "react": "^16.5.2",
+    "react-dom": "^16.5.2",
     "react-hot-loader": "^4.3.11",
     "sass-loader": "^7.0.3",
     "style-loader": "^0.23.0",
     "uglifyjs-webpack-plugin": "^2.0.1",
     "webpack": "^4.19.1",
     "webpack-cli": "^3.1.1",
-    "webpack-dev-server": "^3.1.9"
+    "webpack-dev-server": "^3.1.14",
+    "webpack-merge": "^4.2.1"
   }
 }
