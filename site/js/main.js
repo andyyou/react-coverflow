@@ -1,6 +1,6 @@
 /* eslint-disable */
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
+import { render } from 'react-dom';
 import { StyleRoot } from 'radium';
 import Coverflow from '../../src/Coverflow';
 
@@ -8,7 +8,7 @@ const fn = () => {
   console.log('Album one');
 };
 
-ReactDOM.render(
+render(
   <Coverflow
     width={960}
     height={480}
@@ -51,7 +51,7 @@ ReactDOM.render(
   document.querySelector('.example_1'),
 );
 
-ReactDOM.render(
+render(
   <StyleRoot>
     <Coverflow
       displayQuantityOfSide={2}
@@ -153,4 +153,4 @@ class Container extends Component {
   }
 }
 
-ReactDOM.render(<Container />, document.querySelector('.example_4'));
+render(<Container />, document.querySelector('.example_4'));

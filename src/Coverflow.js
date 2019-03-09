@@ -4,9 +4,8 @@
  *
  * Author: andyyou & asalem1
  */
-import React, { Component } from 'react';
+import React, { Component, createRef } from 'react';
 import PropTypes from 'prop-types';
-import ReactDOM from 'react-dom';
 import Radium, { StyleRoot } from 'radium';
 import styles from './stylesheets/coverflow.scss';
 
@@ -33,6 +32,7 @@ class Coverflow extends Component {
   /**
    * Life cycle events
    */
+  refNode = createRef();
 
   static propTypes = {
     children: PropTypes.node.isRequired,
@@ -117,8 +117,8 @@ class Coverflow extends Component {
     const length = React.Children.count(this.props.children);
     const center = this._center();
     let state = {
-      width: ReactDOM.findDOMNode(this).offsetWidth,
-      height: ReactDOM.findDOMNode(this).offsetHeight,
+      width: this.refNode.current.offsetWidth,
+      height: this.refNode.current.offsetHeight,
     };
     const baseWidth = state.width / (displayQuantityOfSide * 2 + 1);
     let activeImg = typeof active === 'number' ? active : this.props.active;
@@ -141,48 +141,52 @@ class Coverflow extends Component {
     const renderPrevBtn = infiniteScroll ? true : current > 0;
     const renderNextBtn = infiniteScroll ? true : current < this.props.children.length - 1;
     return (
-      <StyleRoot>
-        <div
-          className={styles.container}
-          style={
-            Object.keys(media).length !== 0 ? media : { width: `${width}px`, height: `${height}px` }
-          }
-          onWheel={enableScroll ? this._handleWheel.bind(this) : null}
-          onTouchStart={this._handleTouchStart.bind(this)}
-          onTouchMove={this._handleTouchMove.bind(this)}
-          onKeyDown={this._keyDown.bind(this)}
-          tabIndex="-1"
-        >
-          <div className={styles.coverflow}>
-            <div className={styles.preloader} />
-            <div className={styles.stage} ref="stage">
-              {this._renderFigureNodes()}
-            </div>
-            {navigation && (
-              <div className={styles.actions}>
-                {renderPrevBtn && (
-                  <button
-                    type="button"
-                    className={styles.button}
-                    onClick={() => this._handlePrevFigure()}
-                  >
-                    Previous
-                  </button>
-                )}
-                {renderNextBtn && (
-                  <button
-                    type="button"
-                    className={styles.button}
-                    onClick={() => this._handleNextFigure()}
-                  >
-                    Next
-                  </button>
-                )}
+      <div
+        ref={this.refNode}
+      >
+        <StyleRoot>
+          <div
+            className={styles.container}
+            style={
+              Object.keys(media).length !== 0 ? media : { width: `${width}px`, height: `${height}px` }
+            }
+            onWheel={enableScroll ? this._handleWheel.bind(this) : null}
+            onTouchStart={this._handleTouchStart.bind(this)}
+            onTouchMove={this._handleTouchMove.bind(this)}
+            onKeyDown={this._keyDown.bind(this)}
+            tabIndex="-1"
+          >
+            <div className={styles.coverflow}>
+              <div className={styles.preloader} />
+              <div className={styles.stage} ref="stage">
+                {this._renderFigureNodes()}
               </div>
-            )}
+              {navigation && (
+                <div className={styles.actions}>
+                  {renderPrevBtn && (
+                    <button
+                      type="button"
+                      className={styles.button}
+                      onClick={() => this._handlePrevFigure()}
+                    >
+                      Previous
+                    </button>
+                  )}
+                  {renderNextBtn && (
+                    <button
+                      type="button"
+                      className={styles.button}
+                      onClick={() => this._handleNextFigure()}
+                    >
+                      Next
+                    </button>
+                  )}
+                </div>
+              )}
+            </div>
           </div>
-        </div>
-      </StyleRoot>
+        </StyleRoot>
+      </div>
     );
   }
 
@@ -248,7 +252,6 @@ class Coverflow extends Component {
       e.preventDefault();
       return;
     }
-
     if (this.state.current === index) {
       // If on the active figure
       if (typeof action === 'string') {

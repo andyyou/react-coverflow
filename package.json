@@ -3,6 +3,10 @@
   "version": "0.2.18",
   "description": "Carousel of coverflow effect",
   "main": "main.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/andyyou/react-coverflow"
+  },
   "scripts": {
     "test": "make test",
     "prepublishOnly": "rm -rf dist && webpack --progress --colors -d",
@@ -41,8 +45,7 @@
   },
   "peerDependencies": {
     "prop-types": "^15.6.2",
-    "react": "^16.5.2",
-    "react-dom": "^16.5.2"
+    "react": "^16.5.2"
   },
   "url": "https://github.com/andyyou/react-coverflow.git",
   "devDependencies": {
