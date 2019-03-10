@@ -159,31 +159,32 @@ class Coverflow extends Component {
             <div className={styles.coverflow}>
               <div className={styles.preloader} />
               <div className={styles.stage} ref="stage">
-                {this._renderFigureNodes()}
+                {navigation && (
+                  <div
+                    id={styles.arrow1}
+                    className={styles.arrowWrapper}
+                  >
+                    {renderPrevBtn && (
+                      <div
+                        onClick={(e) => this._handlePrevFigure(e)}
+                        className={`${styles.arrow} ${styles.left}`}>
+                        <span></span>
+                      </div>
+                    )}
+                    {(e) => this._renderFigureNodes(e)}
+                    {renderNextBtn && (
+                      <div
+                        onClick={(e) => this._handleNextFigure(e)}
+                        className={`${styles.arrow} ${styles.right}`}
+                      >
+                        <span></span>
+                      </div>
+                    )}
+                  </div>
+                )}
+                {!navigation && (e) => this._renderFigureNodes(e)}
               </div>
-              {navigation && (
-                <div className={styles.actions}>
-                  {renderPrevBtn && (
-                    <button
-                      type="button"
-                      className={styles.button}
-                      onClick={() => this._handlePrevFigure()}
-                    >
-                      Previous
-                    </button>
-                  )}
-                  {renderNextBtn && (
-                    <button
-                      type="button"
-                      className={styles.button}
-                      onClick={() => this._handleNextFigure()}
-                    >
-                      Next
-                    </button>
-                  )}
-                </div>
-              )}
-            </div>
+              </div>
           </div>
         </StyleRoot>
       </div>
@@ -206,7 +207,8 @@ class Coverflow extends Component {
     }
   }
 
-  _handleFigureStyle(index, current) {
+  _handleFigureStyle(index, current, e) {
+    console.log('e: ', e);
     const { displayQuantityOfSide } = this.props;
     const { width } = this.state;
     const style = {};
@@ -235,6 +237,7 @@ class Coverflow extends Component {
       }`;
       style.zIndex = `${10 - depth}`;
       style.opacity = opacity;
+      style.pointerEvents = 'none';
     } else if (index > current) {
       // Right side
       style.width = `${baseWidth}px`;
@@ -243,11 +246,17 @@ class Coverflow extends Component {
       })`;
       style.zIndex = `${10 - depth}`;
       style.opacity = opacity;
+      style.pointerEvents = 'none';
     }
     return style;
   }
 
   _handleFigureClick = (index, action, e) => {
+    console.log('clicked')
+    console.log('action: ', action);
+    console.log('e: ', e);
+    console.log('this.state: ', this.state);
+    console.log('index: ', index);
     if (!this.props.clickable) {
       e.preventDefault();
       return;
@@ -272,14 +281,14 @@ class Coverflow extends Component {
     }
   };
 
-  _renderFigureNodes = () => {
+  _renderFigureNodes = (e) => {
     const { enableHeading } = this.props;
     const { current } = this.state;
     const figureNodes = React.Children.map(this.props.children, (child, index) => {
       const figureElement = React.cloneElement(child, {
         className: styles.cover,
       });
-      const style = this._handleFigureStyle(index, current);
+      const style = this._handleFigureStyle(index, current, e);
       return (
         <figure
           className={styles.figure}
@@ -304,7 +313,8 @@ class Coverflow extends Component {
 
   _hasNextFigure = () => this.state.current + 1 < this.props.children.length;
 
-  _handlePrevFigure = () => {
+  _handlePrevFigure = (e) => {
+    console.log('e in prev: ', e)
     const { displayQuantityOfSide, infiniteScroll } = this.props;
     const { width } = this.state;
     const { current } = this.state;
@@ -323,7 +333,8 @@ class Coverflow extends Component {
     }
   };
 
-  _handleNextFigure = () => {
+  _handleNextFigure = (e) => {
+    console.log('e in next: ', e)
     const { displayQuantityOfSide, infiniteScroll } = this.props;
     const { width } = this.state;
     const { current } = this.state;
