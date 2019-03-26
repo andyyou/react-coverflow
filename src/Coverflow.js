@@ -48,6 +48,8 @@ class Coverflow extends Component {
     infiniteScroll: PropTypes.bool,
     width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    navigationNextAlias: PropTypes.string, /* Alias to "Next" button in navigation */
+    navigationPrevAlias: PropTypes.string, /* Alias to "Previous" button in navigation */
   };
 
   static defaultProps = {
@@ -62,6 +64,9 @@ class Coverflow extends Component {
     infiniteScroll: false,
     width: 'auto',
     height: 'auto',
+     /* Let keep the status-quo convention as default */ 
+    navigationNextAlias: "Next",
+    navigationPrevAlias: "Previous", 
   };
 
   state = {
@@ -169,7 +174,7 @@ class Coverflow extends Component {
                       className={styles.button}
                       onClick={() => this._handlePrevFigure()}
                     >
-                      Previous
+                      {this.props.navigationPrevAlias}
                     </button>
                   )}
                   {renderNextBtn && (
@@ -178,7 +183,7 @@ class Coverflow extends Component {
                       className={styles.button}
                       onClick={() => this._handleNextFigure()}
                     >
-                      Next
+                      {this.props.navigationNextAlias}
                     </button>
                   )}
                 </div>
