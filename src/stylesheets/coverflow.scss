@@ -4,6 +4,7 @@
   margin: 0 auto;
   padding: 0;
   overflow: hidden;
+  outline: none;
 }
 
 .coverflow {
@@ -36,7 +37,7 @@
   align-self: center;
   box-shadow: 0 50px 70px rgba(0,0,0,0.5);
   // TODO: box-reflect crashing the app. Resolve issue
-  // -webkit-box-reflect: below 1px -webkit-linear-gradient(bottom, rgba(black, .6) , rgba(black, .1) 20%, rgba(black, 0) 30%, rgba(black, 0));
+  -webkit-box-reflect: below 1px -webkit-linear-gradient(bottom, rgba(black, .6) , rgba(black, .1) 20%, rgba(black, 0) 30%, rgba(black, 0));
 }
 
 .cover {
@@ -62,35 +63,88 @@
   background: rgba(0, 0, 0, .6);
 }
 
-.actions {
-  position: absolute;
-  bottom: 30px;
-  left: 0;
-  right: 0;
-  display: flex;
-  justify-content: center;
-
-  .button {
-    border: 1px solid #616161;
-    border-radius: 2px;
-    min-width: 120px;
-    padding: 5px;
-    margin: 2px;
-    background: #616161;
-    color: rgba(255, 255, 255, .9);
-
-    &:hover {
-      background: black;
-      color: white;
-    }
-
-    &:focus {
-      outline: none;
-    }
-  }
-}
-
 @keyframes prevent {
   0% { pointer-events: none; }
   100% { pointer-events: auto; }
+}
+
+.arrowWrapper {
+  display: flex;
+  align-items: center;
+}
+
+#arrow1 .arrow {
+  $size: 50px;
+  $width: 2px;
+  z-index: 999;
+  opacity: 1 !important;
+
+  cursor: pointer;
+  display: block;
+  width: $size / 1.414;
+  height: $size / 1.414 * 2;
+  // width: $size;
+  // height: $size;
+  position: relative;
+  @each $direction in 'left' 'right' {
+    &.#{$direction} {
+      #{$direction}: $size;
+    }
+  }
+
+  & span,
+  &:before,
+  &:after {
+    background: #fff;
+    box-shadow:2px 2px 8px rgba(0,0,0,.5);
+    content: '';
+    display: block;
+    width: $size;
+    height: $width;
+    position: absolute;
+    top: calc(50% - (#{$width} / 2));
+  }
+
+  &:before {
+    transform: rotate(-45deg);
+  }
+  &:after {
+    transform: rotate(45deg);
+  }
+
+  & span {
+    width: 0;
+  }
+  &:hover span {
+    width: $size * 1.414;
+  }
+
+  @each $direction in 'left' 'right' {
+    &.#{$direction} {
+      & span,
+      &:before,
+      &:after {
+        margin: 0 $size / 4;
+        #{$direction}: 0;
+        transform-origin: #{$direction} 50%;
+      }
+
+      &:before,
+      &:after {
+        transition: #{$direction} 0.3s 0.05s;
+      }
+
+      & span {
+        transition: width 0.3s, #{$direction} 0.3s 0.05s;
+      }
+
+      &:hover {
+        & span,
+        &:before,
+        &:after {
+          #{$direction}: $size / 1.414 * -1;
+        }
+      }
+    }
+  }
 }
