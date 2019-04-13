@@ -74,7 +74,7 @@
 }
 
 #arrow1 .arrow {
-  $size: 40px;
+  $size: 50px;
   $width: 2px;
   z-index: 999;
   opacity: 1 !important;
@@ -83,12 +83,20 @@
   display: block;
   width: $size / 1.414;
   height: $size / 1.414 * 2;
+  // width: $size;
+  // height: $size;
   position: relative;
+  @each $direction in 'left' 'right' {
+    &.#{$direction} {
+      #{$direction}: $size;
+    }
+  }
 
   & span,
   &:before,
   &:after {
     background: #fff;
+    box-shadow:2px 2px 8px rgba(0,0,0,.5);
     content: '';
     display: block;
     width: $size;
@@ -116,6 +124,7 @@
       & span,
       &:before,
       &:after {
+        margin: 0 $size / 4;
         #{$direction}: 0;
         transform-origin: #{$direction} 50%;
       }

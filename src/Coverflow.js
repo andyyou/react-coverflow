@@ -167,22 +167,23 @@ class Coverflow extends Component {
                     {renderPrevBtn && (
                       <div
                         onClick={(e) => this._handlePrevFigure(e)}
-                        className={`${styles.arrow} ${styles.left}`}>
-                        <span></span>
+                        className={`${styles.arrow} ${styles.left}`}
+                      >
+                        <span/>
                       </div>
                     )}
-                    {(e) => this._renderFigureNodes(e)}
+                    {this._renderFigureNodes()}
                     {renderNextBtn && (
                       <div
                         onClick={(e) => this._handleNextFigure(e)}
                         className={`${styles.arrow} ${styles.right}`}
                       >
-                        <span></span>
+                        <span/>
                       </div>
                     )}
                   </div>
                 )}
-                {!navigation && (e) => this._renderFigureNodes(e)}
+                {!navigation && this._renderFigureNodes()}
               </div>
               </div>
           </div>
@@ -207,9 +208,8 @@ class Coverflow extends Component {
     }
   }
 
-  _handleFigureStyle(index, current, e) {
-    console.log('e: ', e);
-    const { displayQuantityOfSide } = this.props;
+  _handleFigureStyle(index, current) {
+    const { displayQuantityOfSide, navigation } = this.props;
     const { width } = this.state;
     const style = {};
     const baseWidth = width / (displayQuantityOfSide * 2 + 1);
@@ -237,7 +237,9 @@ class Coverflow extends Component {
       }`;
       style.zIndex = `${10 - depth}`;
       style.opacity = opacity;
-      style.pointerEvents = 'none';
+      if (navigation) {
+        style.pointerEvents = 'none';
+      }
     } else if (index > current) {
       // Right side
       style.width = `${baseWidth}px`;
@@ -246,17 +248,14 @@ class Coverflow extends Component {
       })`;
       style.zIndex = `${10 - depth}`;
       style.opacity = opacity;
-      style.pointerEvents = 'none';
+      if (navigation) {
+        style.pointerEvents = 'none';
+      }
     }
     return style;
   }
 
   _handleFigureClick = (index, action, e) => {
-    console.log('clicked')
-    console.log('action: ', action);
-    console.log('e: ', e);
-    console.log('this.state: ', this.state);
-    console.log('index: ', index);
     if (!this.props.clickable) {
       e.preventDefault();
       return;
@@ -281,14 +280,14 @@ class Coverflow extends Component {
     }
   };
 
-  _renderFigureNodes = (e) => {
+  _renderFigureNodes = () => {
     const { enableHeading } = this.props;
     const { current } = this.state;
     const figureNodes = React.Children.map(this.props.children, (child, index) => {
       const figureElement = React.cloneElement(child, {
         className: styles.cover,
       });
-      const style = this._handleFigureStyle(index, current, e);
+      const style = this._handleFigureStyle(index, current);
       return (
         <figure
           className={styles.figure}
@@ -314,7 +313,6 @@ class Coverflow extends Component {
   _hasNextFigure = () => this.state.current + 1 < this.props.children.length;
 
   _handlePrevFigure = (e) => {
-    console.log('e in prev: ', e)
     const { displayQuantityOfSide, infiniteScroll } = this.props;
     const { width } = this.state;
     const { current } = this.state;
@@ -334,7 +332,6 @@ class Coverflow extends Component {
   };
 
   _handleNextFigure = (e) => {
-    console.log('e in next: ', e)
     const { displayQuantityOfSide, infiniteScroll } = this.props;
     const { width } = this.state;
     const { current } = this.state;

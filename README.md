@@ -80,7 +80,7 @@ For more examples, on how to use React Coverflow, please visit http://andyyou.gi
 | children             | node      |                   | should be `<img />` nodes                    |
 | infiniteScroll       | boolean   | false             | Allows the carousel to scroll from the last image to the (upon clicking the next button) or from the first to the last (by clicking the previous button). infiniteScroll is not supported by mouse scrolling. |
 | displayQuantityOfSide| number    |                   | The number of display image from center to the one side end.|
-| navigation           | boolean   | false             | Enable navigation buttons (prev, next).      |
+| navigation           | boolean   | false             | Enable navigation arrows. This will disable image-click navigation.      |
 | enableHeading        | boolean   | true              | Shows the img alt as the label for the img.  |
 | enableScroll         | boolean   | true              | Enable scrolling feature.                    |
 | media                | object    |                   | To support media query, if you want responsive with parent element you can ignore `width` and `height` props or set it to `auto`. |
@@ -165,6 +165,8 @@ $ npm publish
 ```
 
 ## Release History
+* 2019-04-13
+  - Removed button navigation for arrow navigation. Using arrow navigation now disables the image-click navigation that had previously existed.
 * 2018-03-04
   - Added Infinite Scrolling Option that allows users to scroll from first to last option continuously using the arrow buttons. Buttons dynamically rendered based on current position of img
 * 2018-02-24
