@@ -137,7 +137,7 @@ class Coverflow extends Component {
   }
 
   render() {
-    const { enableScroll, navigation, infiniteScroll, media } = this.props;
+    const { enableScroll, navigation, infiniteScroll, media, vertical } = this.props;
     const { width, height, current } = this.state;
     const renderPrevBtn = infiniteScroll ? true : current > 0;
     const renderNextBtn = infiniteScroll ? true : current < this.props.children.length - 1;
