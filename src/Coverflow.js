@@ -24,7 +24,7 @@ const TRANSITIONS = [
   'webkitTransitionEnd',
 ];
 
-const HandleAnimationState = function() {
+const HandleAnimationState = function () {
   this._removePointerEvents();
 };
 
@@ -158,7 +158,7 @@ class Coverflow extends Component {
           >
             <div className={styles.coverflow}>
               <div className={styles.preloader} />
-              <div className={styles.stage} ref="stage">
+              <div className={styles.stage} ref="stage" style={{ flexDirection: 'column' }}>
                 {navigation && (
                   <div
                     id={styles.arrow1}
@@ -169,7 +169,7 @@ class Coverflow extends Component {
                         onClick={(e) => this._handlePrevFigure(e)}
                         className={`${styles.arrow} ${styles.left}`}
                       >
-                        <span/>
+                        <span />
                       </div>
                     )}
                     {this._renderFigureNodes()}
@@ -178,14 +178,14 @@ class Coverflow extends Component {
                         onClick={(e) => this._handleNextFigure(e)}
                         className={`${styles.arrow} ${styles.right}`}
                       >
-                        <span/>
+                        <span />
                       </div>
                     )}
                   </div>
                 )}
                 {!navigation && this._renderFigureNodes()}
               </div>
-              </div>
+            </div>
           </div>
         </StyleRoot>
       </div>
@@ -209,7 +209,7 @@ class Coverflow extends Component {
   }
 
   _handleFigureStyle(index, current) {
-    const { displayQuantityOfSide, navigation } = this.props;
+    const { displayQuantityOfSide, navigation, vertical } = this.props;
     const { width } = this.state;
     const style = {};
     const baseWidth = width / (displayQuantityOfSide * 2 + 1);
@@ -224,17 +224,19 @@ class Coverflow extends Component {
     // Handle translateX
     if (index === current) {
       style.width = `${baseWidth}px`;
-      style.transform = `translateX(${this.state.move + offset}px)  scale(${
+      //style.transform = `translateY(${this.state.move + offset}px)  scale(${
+      style.transform = `translate${vertical ? 'Y' : 'X'}(${this.state.move + offset}px)  scale(${
+
         this.props.currentFigureScale
-      }`;
+        }`;
       style.zIndex = `${10 - depth}`;
       style.opacity = opacity;
     } else if (index < current) {
       // Left side
       style.width = `${baseWidth}px`;
-      style.transform = `translateX(${this.state.move + offset}px) rotateY(40deg) scale(${
+      style.transform = `translate${vertical ? 'Y' : 'X'}(${this.state.move + offset}px) rotate${vertical ? 'X' : 'Y'}(40deg) scale(${
         this.props.otherFigureScale
-      }`;
+        }`;
       style.zIndex = `${10 - depth}`;
       style.opacity = opacity;
       if (navigation) {
@@ -243,9 +245,9 @@ class Coverflow extends Component {
     } else if (index > current) {
       // Right side
       style.width = `${baseWidth}px`;
-      style.transform = ` translateX(${this.state.move + offset}px) rotateY(-40deg) scale(${
+      style.transform = ` translate${vertical ? 'Y' : 'X'}(${this.state.move + offset}px) rotate${vertical ? 'X' : 'Y'}(-40deg) scale(${
         this.props.otherFigureScale
-      })`;
+        })`;
       style.zIndex = `${10 - depth}`;
       style.opacity = opacity;
       if (navigation) {
