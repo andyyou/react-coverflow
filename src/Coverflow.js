@@ -220,12 +220,14 @@ class Coverflow extends Component {
     // Handle opacity
     const depth = displayQuantityOfSide - Math.abs(current - index);
     let opacity = depth === 1 ? 0.95 : 0.5;
+
+    console.log('hlbka je: ' + depth)
+
     opacity = depth === 2 ? 0.92 : opacity;
     opacity = depth === 3 ? 0.9 : opacity;
     opacity = current === index ? 1 : opacity;
     // Handle translateX
     if (index === current) {
-      //style.transform = `translateY(${this.state.move + offset}px)  scale(${
       style.transform = `translate${vertical ? 'Y' : 'X'}(${this.state.move + offset}px)  scale(${
         this.props.currentFigureScale
         }`;
@@ -253,13 +255,7 @@ class Coverflow extends Component {
       }
     }
 
-    if (vertical) {
-      style.height = `${baseSize}px`;
-    } else {
-      style.width = `${baseSize}px`;
-    }
-
-
+    style.width = `${baseSize}px`;
     return style;
   }
 
@@ -396,14 +392,6 @@ class Coverflow extends Component {
     const { displayQuantityOfSide, vertical } = this.props;
     const { width, height } = this.state;
 
-    /*
-    const clientX = e.nativeEvent.touches[0].clientX;
-    const lastX = TOUCH.lastX;
-    const baseWidth = width / (displayQuantityOfSide * 2 + 1);
-    const move = clientX - lastX;
-    const totalMove = TOUCH.lastMove - move;
-    const sign = Math.abs(move) / move;
-    */
 
     let clientX = null;
     let clientY = null;
@@ -428,7 +416,7 @@ class Coverflow extends Component {
     const totalMove = TOUCH.lastMove - move;
     const sign = Math.abs(move) / move;
 
-    if (Math.abs(totalMove) >= baseWidth) {
+    if (Math.abs(totalMove) >= baseSize) {
       let fn = null;
       if (sign > 0) {
         fn = this._handlePrevFigure();
