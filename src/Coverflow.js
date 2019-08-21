@@ -159,7 +159,7 @@ class Coverflow extends Component {
           >
             <div className={styles.coverflow}>
               <div className={styles.preloader} />
-              <div className={styles.stage} ref="stage" style={{ flexDirection: 'column' }}>
+              <div className={styles.stage} ref="stage" style={{ flexDirection: vertical ? 'column' : 'row' }}>
                 {navigation && (
                   <div
                     id={styles.arrow1}
@@ -220,8 +220,6 @@ class Coverflow extends Component {
     // Handle opacity
     const depth = displayQuantityOfSide - Math.abs(current - index);
     let opacity = depth === 1 ? 0.95 : 0.5;
-
-    console.log('hlbka je: ' + depth)
 
     opacity = depth === 2 ? 0.92 : opacity;
     opacity = depth === 3 ? 0.9 : opacity;
