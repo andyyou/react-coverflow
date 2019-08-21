@@ -12,6 +12,7 @@ import styles from './stylesheets/coverflow.scss';
 const TOUCH = {
   move: false,
   lastX: 0,
+  lastY: 0,
   sign: 0,
   lastMove: 0,
 };
@@ -113,19 +114,19 @@ class Coverflow extends Component {
   }
 
   updateDimensions(active) {
-    const { displayQuantityOfSide } = this.props;
+    const { displayQuantityOfSide, vertical } = this.props;
     const length = React.Children.count(this.props.children);
     const center = this._center();
     let state = {
       width: this.refNode.current.offsetWidth,
       height: this.refNode.current.offsetHeight,
     };
-    const baseWidth = state.width / (displayQuantityOfSide * 2 + 1);
+    const baseSize = (vertical ? state.height : state.width) / (displayQuantityOfSide * 2 + 1);
     let activeImg = typeof active === 'number' ? active : this.props.active;
     if (typeof active === 'number' && ~~active < length) {
       activeImg = ~~active;
       let move = 0;
-      move = baseWidth * (center - activeImg);
+      move = baseSize * (center - activeImg);
 
       state = Object.assign({}, state, {
         current: active,
@@ -210,9 +211,10 @@ class Coverflow extends Component {
 
   _handleFigureStyle(index, current) {
     const { displayQuantityOfSide, navigation, vertical } = this.props;
-    const { width } = this.state;
+    const { width, height } = this.state;
+    const mainSize = vertical ? height : width
     const style = {};
-    const baseWidth = width / (displayQuantityOfSide * 2 + 1);
+    const baseSize = mainSize / (displayQuantityOfSide * 2 + 1);
     const length = React.Children.count(this.props.children);
     const offset = length % 2 === 0 ? -width / 10 : 0;
     // Handle opacity
@@ -223,17 +225,14 @@ class Coverflow extends Component {
     opacity = current === index ? 1 : opacity;
     // Handle translateX
     if (index === current) {
-      style.width = `${baseWidth}px`;
       //style.transform = `translateY(${this.state.move + offset}px)  scale(${
       style.transform = `translate${vertical ? 'Y' : 'X'}(${this.state.move + offset}px)  scale(${
-
         this.props.currentFigureScale
         }`;
       style.zIndex = `${10 - depth}`;
       style.opacity = opacity;
     } else if (index < current) {
       // Left side
-      style.width = `${baseWidth}px`;
       style.transform = `translate${vertical ? 'Y' : 'X'}(${this.state.move + offset}px) rotate${vertical ? 'X' : 'Y'}(40deg) scale(${
         this.props.otherFigureScale
         }`;
@@ -244,7 +243,6 @@ class Coverflow extends Component {
       }
     } else if (index > current) {
       // Right side
-      style.width = `${baseWidth}px`;
       style.transform = ` translate${vertical ? 'Y' : 'X'}(${this.state.move + offset}px) rotate${vertical ? 'X' : 'Y'}(-40deg) scale(${
         this.props.otherFigureScale
         })`;
@@ -254,10 +252,19 @@ class Coverflow extends Component {
         style.pointerEvents = 'none';
       }
     }
+
+    if (vertical) {
+      style.height = `${baseSize}px`;
+    } else {
+      style.width = `${baseSize}px`;
+    }
+
+
     return style;
   }
 
   _handleFigureClick = (index, action, e) => {
+    const { vertical } = this.props
     if (!this.props.clickable) {
       e.preventDefault();
       return;
@@ -274,10 +281,10 @@ class Coverflow extends Component {
       // Move to the selected figure
       e.preventDefault();
       const { displayQuantityOfSide } = this.props;
-      const { width } = this.state;
-      const baseWidth = width / (displayQuantityOfSide * 2 + 1);
+      const { width, height } = this.state;
+      const baseSize = (vertical ? height : width) / (displayQuantityOfSide * 2 + 1);
       const distance = this._center() - index;
-      const move = distance * baseWidth;
+      const move = distance * baseSize;
       this.setState({ current: index, move });
     }
   };
@@ -315,13 +322,14 @@ class Coverflow extends Component {
   _hasNextFigure = () => this.state.current + 1 < this.props.children.length;
 
   _handlePrevFigure = (e) => {
-    const { displayQuantityOfSide, infiniteScroll } = this.props;
-    const { width } = this.state;
+    const { displayQuantityOfSide, infiniteScroll, vertical } = this.props;
+    const { width, height } = this.state;
+    const mainSize = vertical ? height : width
     const { current } = this.state;
-    const baseWidth = width / (displayQuantityOfSide * 2 + 1);
+    const baseSize = mainSize / (displayQuantityOfSide * 2 + 1);
     const distance =
       this._center() - (current - 1 < 0 ? this.props.children.length - 1 : current - 1);
-    const move = distance * baseWidth;
+    const move = distance * baseSize;
 
     if (current - 1 >= 0) {
       this.setState({ current: current - 1, move });
@@ -334,12 +342,13 @@ class Coverflow extends Component {
   };
 
   _handleNextFigure = (e) => {
-    const { displayQuantityOfSide, infiniteScroll } = this.props;
-    const { width } = this.state;
+    const { displayQuantityOfSide, infiniteScroll, vertical } = this.props;
+    const { width, height } = this.state;
+    const mainSize = vertical ? height : width
     const { current } = this.state;
-    const baseWidth = width / (displayQuantityOfSide * 2 + 1);
+    const baseSize = mainSize / (displayQuantityOfSide * 2 + 1);
     const distance = this._center() - (current + 1 >= this.props.children.length ? 0 : current + 1);
-    const move = distance * baseWidth;
+    const move = distance * baseSize;
 
     if (current + 1 < this.props.children.length) {
       this.setState({ current: current + 1, move });
@@ -374,19 +383,48 @@ class Coverflow extends Component {
   }
 
   _handleTouchStart(e) {
-    TOUCH.lastX = e.nativeEvent.touches[0].clientX;
+    if (this.props.vertical) {
+      TOUCH.lastY = e.nativeEvent.touches[0].clientY;
+    } else {
+      TOUCH.lastX = e.nativeEvent.touches[0].clientX;
+    }
     TOUCH.lastMove = this.state.move;
   }
 
   _handleTouchMove(e) {
     e.preventDefault();
-    const { displayQuantityOfSide } = this.props;
-    const { width } = this.state;
+    const { displayQuantityOfSide, vertical } = this.props;
+    const { width, height } = this.state;
 
+    /*
     const clientX = e.nativeEvent.touches[0].clientX;
     const lastX = TOUCH.lastX;
     const baseWidth = width / (displayQuantityOfSide * 2 + 1);
     const move = clientX - lastX;
+    const totalMove = TOUCH.lastMove - move;
+    const sign = Math.abs(move) / move;
+    */
+
+    let clientX = null;
+    let clientY = null;
+    let lastX = null;
+    let lastY = null;
+    let move = null;
+    let baseSize = null;
+
+
+    if (vertical) {
+      clientY = e.nativeEvent.touches[0].clientY;
+      lastY = TOUCH.lastY;
+      move = clientY - lastY;
+      baseSize = height / (displayQuantityOfSide * 2 + 1);
+    } else {
+      clientX = e.nativeEvent.touches[0].clientX;
+      lastX = TOUCH.lastX;
+      move = clientX - lastX;
+      baseSize = width / (displayQuantityOfSide * 2 + 1);
+    }
+
     const totalMove = TOUCH.lastMove - move;
     const sign = Math.abs(move) / move;
 
