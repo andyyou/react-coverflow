@@ -72,7 +72,7 @@ class Coverflow extends Component {
   };
 
   componentDidMount() {
-    this.updateDimensions();
+    this.updateDimensions(this.props.active);
     const length = React.Children.count(this.props.children);
 
     TRANSITIONS.forEach(event => {
