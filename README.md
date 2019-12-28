@@ -1,3 +1,5 @@
+### Looking for someone to take over the project as I've recently changes jobs and had a child and am no longer capable of supporting this dependency. If anyone is interested, please feel free to take ownership of it
+
 React Coverflow
 ===
 [![npm version](https://badge.fury.io/js/react-coverflow.svg)](http://badge.fury.io/js/react-coverflow)
