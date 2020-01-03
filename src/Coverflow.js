@@ -45,6 +45,8 @@ class Coverflow extends Component {
     otherFigureScale: PropTypes.number,
     active: PropTypes.number,
     media: PropTypes.any,
+    classes: PropTypes.object,
+    className: PropTypes.string,
     infiniteScroll: PropTypes.bool,
     width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
@@ -55,6 +57,8 @@ class Coverflow extends Component {
     enableHeading: true,
     enableScroll: true,
     clickable: true,
+    classes: {},
+    className: '',
     currentFigureScale: 1.5,
     otherFigureScale: 0.8,
     active: 0,
@@ -136,7 +140,7 @@ class Coverflow extends Component {
   }
 
   render() {
-    const { enableScroll, navigation, infiniteScroll, media } = this.props;
+    const { enableScroll, navigation, className, classes, infiniteScroll, media } = this.props;
     const { width, height, current } = this.state;
     const renderPrevBtn = infiniteScroll ? true : current > 0;
     const renderNextBtn = infiniteScroll ? true : current < this.props.children.length - 1;
@@ -146,10 +150,10 @@ class Coverflow extends Component {
       >
         <StyleRoot>
           <div
-            className={styles.container}
+            className={`${className} ${styles.container}`}
             style={
-              Object.keys(media).length !== 0 ? media : { width: `${width}px`, height: `${height}px` }
-            }
+              Object.keys(media).length !== 0 ? media : { ...classes, width: `${width}px`, height: `${height}px` }
+        }
             onWheel={enableScroll ? this._handleWheel.bind(this) : null}
             onTouchStart={this._handleTouchStart.bind(this)}
             onTouchMove={this._handleTouchMove.bind(this)}

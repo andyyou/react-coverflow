@@ -12,6 +12,7 @@ render(
   <Coverflow
     width={960}
     height={480}
+    classes={{background: 'rgb(23, 233, 23)'}}
     displayQuantityOfSide={2}
     navigation={false}
     enableHeading={false}
