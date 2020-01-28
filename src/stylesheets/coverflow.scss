@@ -37,7 +37,7 @@
   align-self: center;
   box-shadow: 0 50px 70px rgba(0,0,0,0.5);
   // TODO: box-reflect crashing the app. Resolve issue
-  //-webkit-box-reflect: below 1px -webkit-linear-gradient(bottom, rgba(black, .6) , rgba(black, .1) 20%, rgba(black, 0) 30%, rgba(black, 0));
+  -webkit-box-reflect: below 1px -webkit-linear-gradient(bottom, rgba(black, .6) , rgba(black, .1) 20%, rgba(black, 0) 30%, rgba(black, 0));
 }
 
 .cover {
@@ -85,10 +85,10 @@
   height: $size / 1.414 * 2;
   // width: $size;
   // height: $size;
-  position: relative;
+  position: absolute;
   @each $direction in 'left' 'right' {
     &.#{$direction} {
-      #{$direction}: calc(41% - (#{$width} / 2));
+      #{$direction}: calc(10%);
     }
   }
 
