@@ -42,7 +42,7 @@ const fn = function () {
 }
 
 ReactDOM.render(
-  <Coverflow width="960" height="500"
+  <Coverflow width="960" height="500" classes={{background: 'rgb(233, 23, 23)'}} className=''
     displayQuantityOfSide={2}
     navigation={false}
     enableScroll={true}
@@ -90,7 +90,8 @@ For more examples, on how to use React Coverflow, please visit http://andyyou.gi
 | clickable            | boolean   | true              | Makes images clickable, setting to false will disable clickability of images. |
 | currentFigureScale   | number    | 1.5               | The scale factor (float) to be applied on the active image. |
 | otherFigureScale     | number    | .8                | The scale factor (float) to be applied on the inactive images.|
-
+| classes              | object    |                   | To support style changes for customization. |
+| className            | string    |                   | To add css class to the coverflow to customize. |
 
 #### Responsive
 
