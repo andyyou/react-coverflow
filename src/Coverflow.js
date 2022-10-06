@@ -76,6 +76,17 @@ class Coverflow extends Component {
   };
 
   componentDidMount() {
+
+    if (this.props.enableScroll) {
+      this.refNode.current.addEventListener(
+        'wheel',
+        this._handleWheel.bind(this),
+        {
+          passive: false,
+        }
+      );
+    }
+
     this.updateDimensions(this.props.active);
     const length = React.Children.count(this.props.children);
 
@@ -109,6 +120,14 @@ class Coverflow extends Component {
       }
     });
 
+    this.refNode.current.removeEventListener(
+      'wheel',
+      this._handleWheel.bind(this),
+      {
+        passive: false,
+      }
+    );
+
     // const removeListener = window && window.removeEventListener;
 
     // if(removeListener) {
@@ -140,7 +159,7 @@ class Coverflow extends Component {
   }
 
   render() {
-    const { enableScroll, navigation, className, classes, infiniteScroll, media } = this.props;
+    const { navigation, className, classes, infiniteScroll, media } = this.props;
     const { width, height, current } = this.state;
     const renderPrevBtn = infiniteScroll ? true : current > 0;
     const renderNextBtn = infiniteScroll ? true : current < this.props.children.length - 1;
@@ -154,7 +173,6 @@ class Coverflow extends Component {
             style={
               Object.keys(media).length !== 0 ? media : { ...classes, width: `${width}px`, height: `${height}px` }
         }
-            onWheel={enableScroll ? this._handleWheel.bind(this) : null}
             onTouchStart={this._handleTouchStart.bind(this)}
             onTouchMove={this._handleTouchMove.bind(this)}
             onKeyDown={this._keyDown.bind(this)}
