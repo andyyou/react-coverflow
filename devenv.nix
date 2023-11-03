@@ -1,0 +1,5 @@
+{ pkgs, ... }:
+
+{
+  packages = [ pkgs.bun ];
+}
