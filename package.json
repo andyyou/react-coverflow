@@ -15,7 +15,7 @@
     "build:watch": "webpack --progress --colors --watch",
     "lint": "eslint ./src/Coverflow.js eslint ./site/js/main.js",
     "build-site": "rm -rf site/js/*.bundle.js && NODE_ENV=production webpack --config site/webpack.prod.js",
-    "dev": "rm -rf site/js/*.bundle.js && NODE_ENV=react-hot webpack-dev-server --config site/webpack.dev.js --progress --colors --inline --hot --port 3000 --host 0.0.0.0 --content-base site"
+    "dev": "rm -rf site/js/*.bundle.js && NODE_ENV=production bun build site/js/main.js --outdir site --entry-naming js/[name].bundle.[ext] --asset-naming css/[name]-[hash].[ext] --minify && bunx serve site"
   },
   "postcss": {
     "parser": "sugarss",
